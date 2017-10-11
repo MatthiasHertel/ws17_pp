@@ -20,3 +20,7 @@ https://www.ws17-pp.mhertel.de
 7. Abschlussdokument (Fälligkeitsdatum ...)
 
 8. Folien / Präsentation (Fälligkeitsdatum	Samstag, 3. Februar 2018, 00:00)
+
+## Ressourcen
+
+https://prof.beuth-hochschule.de/edlich/praxisprojekt-online/
