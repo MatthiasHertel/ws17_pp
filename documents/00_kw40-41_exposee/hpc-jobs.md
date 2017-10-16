@@ -1,8 +1,21 @@
 # Entwicklung einer REST API für HPC Jobs
 
-# Beschreibung
+Cloud Computing ermoeglicht die flexible Nutzung von Computing Resources.
+
+Durch den Einsatz von HTTP und JSON basierten Schnittstellen (REST APIs) wird es fuer
+Kunden moeglich, sehr flexibel (z.B. automatisiert) Computing Resources zu nutzen.
+
+Moeglich Anwendungsfaelle sind sehr vielfaeltig. So kann man z.B. in einer Continous Integration Pipeline diese API nutzen.
+Auf diese Weise koennen CAE-Modelle bei jeder Aenderung durchgerechnet werden, und getestet werden, ob sie alle Anforderungen erfuellen.
+
+
+Auch die Moeglichkeit, die API in HPC Software einzubauen, die sonst auf Workstations arbeitet und anschliessend transparent Computing Resources in der Cloud nutzen kann, ist interessant. Insbesondere bei Variantensimulationen, also Simulationen, bei denen einige Parameter des Modells variiert werden, ist so eine Funktionalitaet nuetzlich. Normalerweise nutzen Ingenieure selten Variantensimulationen, da diese auf den Workstations zu aufwaendig sind.
+
+
+## Beschreibung
 
 Die API soll vor allem Serverseitig umgesetzt werden.
+Clientseitig sollen mindestens automatisierte Integrationtests umgesetzt werden.
 
 Der Transport/Kodierung der Daten erfolgt mittels HTTP und JSON.
 Die Daten sollen Transport-verschlüsselt (TLS) übertragen werden.
@@ -30,6 +43,8 @@ Zugriff auf Ausgabe und Fehlermeldungen zur Laufzeit des Jobs (nicht erst nachde
 
 Die API selbst soll auf existierender Software basieren. Eine Anlehnung an existierende APIs ist ausdrücklich gewünscht, aber nicht zwingend erforderlich.
 
+Vermutlich ist es am sinnvollsten, einen Reverse-Proxy vor die gesamte REST-Architektur zu schalten. Dadurch kann Authentifizierung und Authorisierung an einer Stelle ermoeglicht werden.
+
 Job-Templates sollen dabei aus Docker Containern und Adaptern zur Verifikation und Übergabe der Input bzw. Output-Daten bestehen.
 
 Als Queueing System kann Univa Grid-Engine oder eine der vielen Open Source Alternativen zum Einsatz kommen.
@@ -45,3 +60,5 @@ In iterativen Entwicklungszyklen von ca 2 Wochen sollen zuerst ein oder zwei Pro
 Die verschiedenen Routes in der API werden per Mockup angelegt, bzw. dokumentiert. Möglicherweise bestehen einige Routen auch nur aus einem Proxy zum Object-Store.
 
 Nebenläufig testen wir den Zugriff auf die Komponenten des Software Systems und überlegen, welche Anforderungen an die Datenbank-Modelle gestellt werden. Anschliessend soll die Integration gebaut werden, so dass für ein Beispiel-Jobtemplate der komplette Durchlauf funktioniert.
+
+Test Driven Development (TDD) ist ausdruecklich erwuenscht.
