@@ -4,7 +4,8 @@ import (
     "fmt"
     "log"
     "net/http"
-
+    "time"
+    "encoding/json"
     "github.com/gorilla/mux"
 
 )
@@ -23,7 +24,12 @@ func Index(w http.ResponseWriter, r *http.Request) {
 }
 
 func TodoIndex(w http.ResponseWriter, r *http.Request) {
-    fmt.Fprintln(w, "Todo Index!")
+    todos := Todos{
+        Todo{Name: "Learn GoLang Basics"},
+        Todo{Name: "Develop sth great"},
+    }
+
+    json.NewEncoder(w).Encode(todos)
 }
 
 func TodoShow(w http.ResponseWriter, r *http.Request) {
@@ -31,3 +37,12 @@ func TodoShow(w http.ResponseWriter, r *http.Request) {
     todoId := vars["todoId"]
     fmt.Fprintln(w, "Todo show:", todoId)
 }
+
+
+type Todo struct {
+    Name      string
+    Completed bool
+    Due       time.Time
+}
+
+type Todos []Todo
