@@ -29,7 +29,7 @@ func BasicAuth(h http.Handler) http.Handler {
 			return
 		}
 
-		if pair[0] != "username" && pair[1] != "password" {
+		if pair[0] != "username" || pair[1] != "password" {
 			http.Error(w, "Not authorized", http.StatusForbidden)
 			return
 		}
