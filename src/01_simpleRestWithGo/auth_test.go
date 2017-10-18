@@ -7,6 +7,13 @@ import (
 	"testing"
 )
 
+// basicAuth string helper
+func basicAuth(username, password string) string {
+	auth := username + ":" + password
+	return base64.StdEncoding.EncodeToString([]byte(auth))
+}
+
+// TODO
 func TestServerSendsHeader(t *testing.T) {}
 
 func TestServerDeniesNoCredentials(t *testing.T) {
@@ -28,17 +35,12 @@ func TestServerDeniesNoCredentials(t *testing.T) {
 	}
 }
 
-func basicAuth(username, password string) string {
-	auth := username + ":" + password
-	return base64.StdEncoding.EncodeToString([]byte(auth))
-}
-
 func TestServerDeniesWrongPassword(t *testing.T) {
 	handler := BasicAuth(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		t.Error("SERVER ALLOWS WHAT IT SHOULD DENY")
 	}))
 
-	req, err := http.NewRequest("GET", "/wrong-password", nil)
+	req, err := http.NewRequest("GET", "/", nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -59,7 +61,7 @@ func TestServerDeniesWrongUsername(t *testing.T) {
 		t.Error("SERVER ALLOWS WHAT IT SHOULD DENY")
 	}))
 
-	req, err := http.NewRequest("GET", "/wrong-password", nil)
+	req, err := http.NewRequest("GET", "/", nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -81,7 +83,7 @@ func TestServerAllowsCorrectCredentials(t *testing.T) {
 		// everything ok
 	}))
 
-	req, err := http.NewRequest("GET", "/wrong-password", nil)
+	req, err := http.NewRequest("GET", "/", nil)
 	if err != nil {
 		t.Fatal(err)
 	}
