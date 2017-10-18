@@ -1,6 +1,7 @@
 package main
 
 import (
+	// "blabla"
 	"log"
 	"net/http"
 )
@@ -8,6 +9,8 @@ import (
 func main() {
 
 	router := NewRouter()
+
+	// blabla.Blub("package test")
 
 	log.Fatal(http.ListenAndServe(":8080", router))
 }

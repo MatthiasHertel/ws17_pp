@@ -1,3 +1,3 @@
 #! /bin/sh
 
-curl -v -H "Content-Type: application/json" -d '{"name":"New Todo "' http://localhost:8080/todos
+curl -v -u username:password -H "Content-Type: application/json" -d '{"name":"New Todo "'} http://localhost:8080/todos
