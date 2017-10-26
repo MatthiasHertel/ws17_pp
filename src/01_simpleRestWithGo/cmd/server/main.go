@@ -4,11 +4,13 @@ import (
 	// "blabla"
 	"log"
 	"net/http"
+
+	"github.com/MatthiasHertel/ws17_pp"
 )
 
 func main() {
 
-	router := NewRouter()
+	router := ws17_pp.NewRouter()
 
 	// blabla.Blub("package test")
 

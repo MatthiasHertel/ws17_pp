@@ -1,4 +1,4 @@
-package main
+package ws17_pp
 
 import (
 	"encoding/json"
