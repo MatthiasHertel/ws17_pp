@@ -12,7 +12,7 @@ func main() {
 
 	router := ws17_pp.NewRouter()
 
-	// blabla.Blub("package test")
+	log.Print("starting server at port 8080")
 
 	log.Fatal(http.ListenAndServe(":8080", router))
 }

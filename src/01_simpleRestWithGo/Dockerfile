@@ -3,15 +3,19 @@
 FROM golang:latest
 
 # Create a directory inside the container to store all our application and then make it the working directory.
-RUN mkdir -p /go/src/1_simpleRestWithGo
-WORKDIR /go/src/1_simpleRestWithGo
 
 # Copy the 1_simpleRestWithGo directory (where the Dockerfile lives) into the container.
-COPY . /go/src/1_simpleRestWithGo
+COPY ./src /go/src/github.com/MatthiasHertel/ws17_pp
+COPY ./cmd/server /go/src/github.com/MatthiasHertel/ws17_pp/cmd/server
+WORKDIR /go/src/github.com/MatthiasHertel/ws17_pp/cmd/server
+
+RUN go get github.com/gorilla/mux
+
+RUN go build -o /go/bin/server .
 
 # Download and install any required third party dependencies into the container.
-RUN go-wrapper download
-RUN go-wrapper install
+# RUN go-wrapper download
+# RUN go-wrapper install
 
 # Set the PORT environment variable inside the container
 ENV PORT 8080
@@ -20,4 +24,4 @@ ENV PORT 8080
 EXPOSE 8080
 
 # Now tell Docker what command to run when the container starts
-CMD ["go-wrapper", "run"]
+CMD ["/go/bin/server"]
