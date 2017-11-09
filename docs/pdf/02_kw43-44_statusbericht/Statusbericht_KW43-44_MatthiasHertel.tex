@@ -1,7 +1,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% LaTeX Template: Softwaretechnik SS 2017
+% LaTeX Template: Praxisprojekt WS 2017
 %
-% Date: April 2017
+% Date: November 2017
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -77,23 +77,42 @@
 % BODY
 %-------------------------------------------------------------------------------
 
-\section{LE Description}
+\section{Statusbericht}
+\subsection{Was habe ich bisher im Projekt erreicht?}
+\begin{itemize}
+\item Docker Environment
+\item Refactoring Project-Structure
+\item TDD in Go
+\item Security - Auslagerung der Authorization in ein Api-Gateway (getkong.org)
+\item discovery-phase branch in den Master gemerged - zuk"unftig werden Features/Funktionalit"aten in den Master gemerged, der Master bleibt stets runable
+\end{itemize}
 
-\subsection{Task \#}
-\subsubsection*{Aufgabe:}
 
-% Aufgabe framed
-\begin{framed}
-\textbf{Task Topic}
-\smallbreak
-Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-\\
-Lorem ipsum dolor sit amet.
-\bigbreak
-\small Bearbeitungszeit: xx Minuten
-\end{framed}
-\bigbreak
-\bigbreak
-\subsubsection*{L"osung:}
-Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+\subsection{Was habe ich bis zum n"achsten Statusbericht vor?}
+
+
+\begin{itemize}
+\item Security abschliessen
+\item Spezifikationen der Rescale-API aufnehmen und umsetzen
+\item Dokumentation mittels GoDoc umsetzen
+\item Dokumentation Deployment- und Sequenzdiagramme entwerfen
+\item Swagger (Scaffolding for Api's) ausprobieren
+\end{itemize}
+
+Dokumentation der Issues werden direkt im Repository gef"uhrt.
+
+\subsection{Gibt es Probleme bei der Durchf"uhrung?}
+\begin{itemize}
+\item Es gab beim Projekt-Refactoring Probleme mit dem Packagemanagement von GO, die Source zum Package musste gesymlinked werden damit der GOPATH bei dem Buildprozess richtig referenzierte. Das ist erstmal nur ein Hack/Workaround.
+\end{itemize}
+
+
+\section{Ressourcen}
+\textbf{Git-Repository als Versionskontrolle:}\\
+\url{https://github.com/MatthiasHertel/ws17_pp}
+
+\textbf{Webseite zur Dokumentation:}\\
+\url{https://www.ws17-pp.mhertel.de}
+
+
 \end{document}
