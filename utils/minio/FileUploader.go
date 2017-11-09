@@ -7,10 +7,13 @@ import (
 )
 
 func main() {
-	endpoint := "play.minio.io:9000"
-	accessKeyID := "Q3AM3UQ867SPQQA43P2F"
-	secretAccessKey := "zuf+tfteSlswRu7BJ86wekitnifILbZam1KYY3TG"
-	useSSL := true
+	// endpoint := "play.minio.io:9000"
+	// accessKeyID := "Q3AM3UQ867SPQQA43P2F"
+	// secretAccessKey := "zuf+tfteSlswRu7BJ86wekitnifILbZam1KYY3TG"
+	endpoint := "localhost:9000"
+	accessKeyID := "7SAPC6M1QZPXS1T0CRNW"
+	secretAccessKey := "mUjTsz+zjzcWN6yYdcaD8YurvVa7mAKd/iaphqlu"
+	useSSL := false
 
 	// Initialize minio client object.
 	minioClient, err := minio.New(endpoint, accessKeyID, secretAccessKey, useSSL)
