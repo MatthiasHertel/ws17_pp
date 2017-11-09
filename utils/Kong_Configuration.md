@@ -57,7 +57,7 @@ curl -i -X POST \
   --url http://localhost:8001/apis/ \
   --data 'name=hpc-rest-api' \
   --data 'hosts=192.168.247.105' \
-  --data 'upstream_url=192.168.247.105:8080'
+  --data 'upstream_url=http://192.168.247.105:8080'
 ```
 
 NOTE:
@@ -94,5 +94,5 @@ Connection: keep-alive
 ```
 curl -i -X GET \
   --url http://localhost:8000/ \
-  --header 'Host: example.com'
+  --header 'Host: 192.168.247.105'
 ```
