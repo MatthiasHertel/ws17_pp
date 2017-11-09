@@ -96,3 +96,17 @@ curl -i -X GET \
   --url http://localhost:8000/ \
   --header 'Host: 192.168.247.105'
 ```
+
+4. Enabling Plugin (key-auth) and Add Consumer
+
+```
+ curl -i -X POST --url http://localhost:8001/apis/hpc-rest-api/plugins/ --data 'name=key-auth'
+
+ curl -i -X GET --url http://localhost:8000/ --header 'Host: 192.168.247.105'
+
+ curl -i -X POST --url http://localhost:8001/consumers/ --data "username=john"
+
+ curl -i -X POST --url http://localhost:8001/consumers/Jason/key-auth/ --data 'key=1900'
+
+ curl -i -X GET --url http://localhost:8000 --header "Host: 192.168.247.105" --header "apikey: 1900"
+```
