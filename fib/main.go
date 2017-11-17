@@ -1,8 +1,12 @@
 package main
 
-import ( "fmt" )
+import (
+  "fmt"
+  "flag"
+)
 
-//
+
+// intentionally slow
 func fib(n int) int {
   if n<3 {
     return 1
@@ -11,8 +15,13 @@ func fib(n int) int {
   }
 }
 
+var n int
+
 func main() {
-  for i := 1; i <= 10; i++ {
+  flag.IntVar(&n, "n", 10, "argument for fib")
+  flag.Parse()
+
+  for i := 1; i <= n; i++ {
     fmt.Printf("%v => %v\n", i, fib(i))
   }
 }
