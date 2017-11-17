@@ -1,3 +1,3 @@
 #!/bin/bash
 
-docker run -it --rm fib fib -n 30
+docker run -it --rm fib:dev fib -n 30

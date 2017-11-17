@@ -1,3 +1,3 @@
 #!/bin/bash
 
-docker build -t fib .
+docker build -t fib:dev .
