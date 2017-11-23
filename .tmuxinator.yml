@@ -1,0 +1,40 @@
+name: hpc-rest-dev-env
+root: .
+
+startup_window: kong
+
+windows:
+  - working:
+      layout: main-horizontal
+      panes:
+        - git:
+          - git st
+        - docker:
+          - watch docker ps -a
+  - go-rest-api:
+      layout: main-horizontal
+      panes:
+        - server:
+          - ./cmd/server
+          - ./server
+        - test-server:
+          - echo 'here test die routen'
+  - kong:
+      layout: main-horizontal
+      panes:
+        - compose-up:
+          - ./scripts/services/kong_compose_up.sh
+        - seeding:
+          - ./scripts/services/kong_seed_api.sh
+          - ./scripts/services/kong_seed_consumer.sh
+  - minio:
+      layout: main-horizontal
+      panes:
+        - compose-up:
+          - ./scripts/services/minio_compose_up.sh
+        - seeding:
+          - ./scripts/services/minio_test.sh
+
+  - nomad-consul:
+    - ./scripts/services/consul_up.sh
+    - ./scripts/services/nomad_up.sh
