@@ -10,9 +10,9 @@ func main() {
 	// endpoint := "play.minio.io:9000"
 	// accessKeyID := "Q3AM3UQ867SPQQA43P2F"
 	// secretAccessKey := "zuf+tfteSlswRu7BJ86wekitnifILbZam1KYY3TG"
-	endpoint := "localhost:9000"
-	accessKeyID := "7SAPC6M1QZPXS1T0CRNW"
-	secretAccessKey := "mUjTsz+zjzcWN6yYdcaD8YurvVa7mAKd/iaphqlu"
+	endpoint := "localhost:9001"
+	accessKeyID := "minio"
+	secretAccessKey := "minio123"
 	useSSL := false
 
 	// Initialize minio client object.
@@ -22,7 +22,8 @@ func main() {
 	}
 
 	// Make a new bucket called mymusic.
-	bucketName := "cpu247testbucket"
+	// TODO fetch the consumer with uuid from kong here
+ 	bucketName := "testbucket"
 	location := "us-east-1"
 
 	err = minioClient.MakeBucket(bucketName, location)
