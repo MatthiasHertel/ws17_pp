@@ -4,37 +4,36 @@ import "fmt"
 
 var currentId int
 
-var todos Todos
+var jobs Jobs
 
 // Give us some seed data
 func init() {
-	RepoCreateTodo(Todo{Name: "Learn GoLang Basics"})
-	RepoCreateTodo(Todo{Name: "Develop sth great"})
+	RepoCreateJob(Job{Name: "Job Mock - Fibonacci"})
 }
 
-func RepoFindTodo(id int) Todo {
-	for _, t := range todos {
+func RepoFindJob(id int) Job {
+	for _, t := range jobs {
 		if t.Id == id {
 			return t
 		}
 	}
-	// return empty Todo if not found
-	return Todo{}
+	// return empty Job if not found
+	return Job{}
 }
 
-func RepoCreateTodo(t Todo) Todo {
+func RepoCreateJob(t Job) Job {
 	currentId += 1
 	t.Id = currentId
-	todos = append(todos, t)
+	jobs = append(jobs, t)
 	return t
 }
 
-func RepoDestroyTodo(id int) error {
-	for i, t := range todos {
+func RepoDestroyJob(id int) error {
+	for i, t := range jobs {
 		if t.Id == id {
-			todos = append(todos[:i], todos[i+1:]...)
+			jobs = append(jobs[:i], jobs[i+1:]...)
 			return nil
 		}
 	}
-	return fmt.Errorf("Could not find Todo with id of %d to delete", id)
+	return fmt.Errorf("Could not find Job with id of %d to delete", id)
 }

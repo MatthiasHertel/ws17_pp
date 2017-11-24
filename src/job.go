@@ -2,11 +2,11 @@ package ws17_pp
 
 import "time"
 
-type Todo struct {
+type Job struct {
 	Id        int       `json:"id"`
 	Name      string    `json:"name"`
 	Completed bool      `json:"completed"`
 	Due       time.Time `json:"due"`
 }
 
-type Todos []Todo
+type Jobs []Job

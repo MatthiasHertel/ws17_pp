@@ -14,22 +14,22 @@ func Index(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintln(w, "Welcome!")
 }
 
-func TodoIndex(w http.ResponseWriter, r *http.Request) {
+func JobIndex(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.WriteHeader(http.StatusOK)
-	if err := json.NewEncoder(w).Encode(todos); err != nil {
+	if err := json.NewEncoder(w).Encode(jobs); err != nil {
 		panic(err)
 	}
 }
 
-func TodoShow(w http.ResponseWriter, r *http.Request) {
+func JobShow(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
-	todoId := vars["todoId"]
-	fmt.Fprintln(w, "Todo show:", todoId)
+	jobId := vars["jobId"]
+	fmt.Fprintln(w, "Job show:", jobId)
 }
 
-func TodoCreate(w http.ResponseWriter, r *http.Request) {
-	var todo Todo
+func JobCreate(w http.ResponseWriter, r *http.Request) {
+	var job Job
 	body, err := ioutil.ReadAll(io.LimitReader(r.Body, 1048576))
 	if err != nil {
 		panic(err)
@@ -38,7 +38,7 @@ func TodoCreate(w http.ResponseWriter, r *http.Request) {
 		panic(err)
 	}
 
-	if err := json.Unmarshal(body, &todo); err != nil {
+	if err := json.Unmarshal(body, &job); err != nil {
 		w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 		w.WriteHeader(422) // unprocessable entity
 		if err := json.NewEncoder(w).Encode(err); err != nil {
@@ -46,7 +46,7 @@ func TodoCreate(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	t := RepoCreateTodo(todo)
+	t := RepoCreateJob(job)
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.WriteHeader(http.StatusCreated)
 	if err := json.NewEncoder(w).Encode(t); err != nil {
