@@ -3,6 +3,51 @@ Praxisprojekt (BHTB MIB 13 W17)
 
 https://www.ws17-pp.mhertel.de
 
+## Development
+
+1. required for creating tmux session (.tmuxinator.yml)
+
+  `./scripts/install_tmuxinator.sh`
+
+  (requires ruby <=2.2.1)
+
+2. recommened to start the tmux-session
+
+  `./scripts/up_tmux.sh`
+
+  (alternativly execute the scripts in ./scripts folder to start the services )
+
+3. foreach service is a tmux-window with useful panes
+
+  ```
+  windows:
+    - working:
+      - panes
+        - git:
+        - docker:
+    - go-rest-api:
+      - panes
+        - server:
+        - test-server:
+    - kong:
+      - panes
+        - compose-up:
+        - seeding:
+    - minio:
+      - panes
+        - compose-up:
+        - seeding:
+    - nomad-consul:
+      - panes:
+        - start nomad
+        - start consul
+        - submit testjob fib
+  ```
+
+4. quit Development with stopping service-containers)
+
+  `./scripts/down_tmux.sh`
+
 ## Aufgaben
 
 1. Exposee (Fälligkeitsdatum	Dienstag, 17. Oktober 2017, 00:00)
