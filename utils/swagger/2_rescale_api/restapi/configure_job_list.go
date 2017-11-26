@@ -5,6 +5,7 @@ package restapi
 import (
 	"crypto/tls"
 	"net/http"
+	"sync"
 
 	errors "github.com/go-openapi/errors"
 	runtime "github.com/go-openapi/runtime"
@@ -20,16 +21,28 @@ import (
 // This file is safe to edit. Once it exists it will not be overwritten
 
 //go:generate swagger generate server --target .. --name JobList --spec ../swagger.yml
+<<<<<<< HEAD
 var items = make(map[int64]*models.Job)
 
 func allItems(page int64, pagesize int64) (result []*models.Job) {
 	result = make([]*models.Job, 0)
 	for id, item := range items {
+=======
+var jobs = make(map[int64]*models.Job)
+
+func allItems(page int64, pagesize int64) (result []*models.Job) {
+	result = make([]*models.Job, 0)
+	for id, job := range jobs {
+>>>>>>> 186e69eae2ebfa7a6b5aeb03f9e1c6ccba47f4fc
 		if len(result) >= int(pagesize) {
 			return
 		}
 		if page == 0 || id > page {
+<<<<<<< HEAD
 			result = append(result, item)
+=======
+			result = append(result, job)
+>>>>>>> 186e69eae2ebfa7a6b5aeb03f9e1c6ccba47f4fc
 		}
 	}
 	return
