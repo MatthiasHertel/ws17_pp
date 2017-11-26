@@ -1,5 +1,8 @@
 #!/bin/bash
 
+cd "$(dirname "$0")"
+cd ..
+
 # TODO stop all started services and running docker containers here
 
 # stop kong container (kong , kong-database, kong-dashboard)
