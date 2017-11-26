@@ -16,7 +16,7 @@ windows:
       panes:
         - server:
           - ./cmd/server
-          - ./server
+          - go run main.go
         - test-server:
           - echo 'here test die routen'
   - kong:
