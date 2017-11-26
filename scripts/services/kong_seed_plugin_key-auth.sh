@@ -21,7 +21,7 @@ do
     printf '\n\e[1;34m%-6s\e[m\n' '-> seed plugin key-auth for the api "hpc-rest-api"'
     printf 'exec command:\t curl -i -X POST --url http://localhost:8001/apis/hpc-rest-api/plugins/ --data "name=key-auth"'
     if hash jq 2>/dev/null; then
-        curl -s -X POST --url http://localhost:8001/apis/hpc-rest-api/plugins/ --data 'name=key-auth' | jq
+        curl -s -X POST --url http://localhost:8001/apis/hpc-rest-api/plugins/ --data 'name=key-auth' | jq '.'
     else
         curl -s -X POST --url http://localhost:8001/apis/hpc-rest-api/plugins/ --data 'name=key-auth'
     fi
@@ -31,7 +31,7 @@ do
     printf '\n\e[1;34m%-6s\e[m\n' '-> Test - 401 not authorized (no api key found)'
     printf 'exec command:\t curl -i -X GET --url http://localhost:8000/ --header "Host:'${1}' "\n'
     if hash jq 2>/dev/null; then
-        curl -s -X GET --url http://localhost:8000/ --header 'Host: '${1} | jq
+        curl -s -X GET --url http://localhost:8000/ --header 'Host: '${1} | jq '.'
     else
         curl -s -X GET --url http://localhost:8000/ --header 'Host: '${1}
     fi

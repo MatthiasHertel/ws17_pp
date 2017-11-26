@@ -21,7 +21,7 @@ do
     printf '\n\e[1;34m%-6s\e[m\n' '-> add consumer to kong without acl'
     printf 'exec command:\t curl -X POST --url http://localhost:8001/consumers/ --data "username=john" \n'
     if hash jq 2>/dev/null; then
-        curl -s -X POST --url http://localhost:8001/consumers/ --data "username=john" | jq
+        curl -s -X POST --url http://localhost:8001/consumers/ --data "username=john" | jq '.'
     else
         curl -s -X POST --url http://localhost:8001/consumers/ --data "username=john"
     fi
@@ -30,7 +30,7 @@ do
     printf '\n\e[1;34m%-6s\e[m\n' '-> add api-key to consumer'
     printf 'exec command:\t curl -X POST --url http://localhost:8001/consumers/john/key-auth/ --data "key=123" \n'
     if hash jq 2>/dev/null; then
-        curl -s -X POST --url http://localhost:8001/consumers/john/key-auth/ --data 'key=123' | jq
+        curl -s -X POST --url http://localhost:8001/consumers/john/key-auth/ --data 'key=123' | jq '.'
     else
         curl -s -X POST --url http://localhost:8001/consumers/john/key-auth/ --data 'key=123'
     fi

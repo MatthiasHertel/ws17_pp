@@ -25,7 +25,7 @@ do
         --url http://localhost:8001/apis/ \
         --data 'name=hpc-rest-api' \
         --data 'hosts='${1} \
-        --data 'upstream_url=http://'${1}':7777' | jq
+        --data 'upstream_url=http://'${1}':7777' | jq '.'
     else
         curl -s -X POST \
         --url http://localhost:8001/apis/ \
@@ -38,7 +38,7 @@ do
     printf '\n\e[1;34m%-6s\e[m\n' '-> Test assert - 200 list api'
     printf 'exec command:\t curl http://localhost:8001/apis/hpc-rest-api \n'
     if hash jq 2>/dev/null; then
-        curl -s http://localhost:8001/apis/hpc-rest-api | jq
+        curl -s http://localhost:8001/apis/hpc-rest-api | jq '.'
     else
         curl -s http://localhost:8001/apis/hpc-rest-api
     fi
