@@ -3,8 +3,9 @@ version: '2.1'
 services:
 
   consul:
-    image: progrium/consul:latest
-    command: -server -bootstrap -ui-dir /ui
+    # image: progrium/consul:latest
+    image: consul:latest
+    # command: -server -bootstrap -ui-dir /ui
     healthcheck:
       test: ["CMD-SHELL", "curl -I -s -L http://localhost:8500 || exit 1"]
       interval: 5s
