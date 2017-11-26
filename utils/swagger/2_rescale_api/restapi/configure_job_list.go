@@ -6,6 +6,7 @@ import (
 	"crypto/tls"
 	"net/http"
 	"sync"
+	"sync/atomic"
 
 	errors "github.com/go-openapi/errors"
 	runtime "github.com/go-openapi/runtime"
@@ -21,31 +22,42 @@ import (
 // This file is safe to edit. Once it exists it will not be overwritten
 
 //go:generate swagger generate server --target .. --name JobList --spec ../swagger.yml
-<<<<<<< HEAD
-var items = make(map[int64]*models.Job)
 
-func allItems(page int64, pagesize int64) (result []*models.Job) {
+var items = make(map[int64]*models.Job)
+var lastID int64
+
+var itemsLock = &sync.Mutex{}
+
+func newItemID() int64 {
+	return atomic.AddInt64(&lastID, 1)
+}
+
+func allItems(page int64, page_size int64) (result []*models.Job) {
 	result = make([]*models.Job, 0)
 	for id, item := range items {
-=======
-var jobs = make(map[int64]*models.Job)
-
-func allItems(page int64, pagesize int64) (result []*models.Job) {
-	result = make([]*models.Job, 0)
-	for id, job := range jobs {
->>>>>>> 186e69eae2ebfa7a6b5aeb03f9e1c6ccba47f4fc
-		if len(result) >= int(pagesize) {
+		if len(result) >= int(page_size) {
 			return
 		}
 		if page == 0 || id > page {
-<<<<<<< HEAD
 			result = append(result, item)
-=======
-			result = append(result, job)
->>>>>>> 186e69eae2ebfa7a6b5aeb03f9e1c6ccba47f4fc
 		}
 	}
 	return
+}
+
+func addItem(item *models.Job) error {
+	if item == nil {
+		return errors.New(500, "item must be present")
+	}
+
+	itemsLock.Lock()
+	defer itemsLock.Unlock()
+
+	newID := newItemID()
+	item.ID = newID
+	items[newID] = item
+
+	return nil
 }
 
 func configureFlags(api *operations.JobListAPI) {
@@ -67,7 +79,10 @@ func configureAPI(api *operations.JobListAPI) http.Handler {
 	api.JSONProducer = runtime.JSONProducer()
 
 	api.JobsAddOneHandler = jobs.AddOneHandlerFunc(func(params jobs.AddOneParams) middleware.Responder {
-		return middleware.NotImplemented("operation jobs.AddOne has not yet been implemented")
+		if err := addItem(params.Body); err != nil {
+			return jobs.NewAddOneDefault(500).WithPayload(&models.Error{Code: 500, Message: swag.String(err.Error())})
+		}
+		return jobs.NewAddOneCreated().WithPayload(params.Body)
 	})
 	api.JobsDestroyOneHandler = jobs.DestroyOneHandlerFunc(func(params jobs.DestroyOneParams) middleware.Responder {
 		return middleware.NotImplemented("operation jobs.DestroyOne has not yet been implemented")
