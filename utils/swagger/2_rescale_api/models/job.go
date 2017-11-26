@@ -29,9 +29,8 @@ type Job struct {
 	ExpectedRuns int64 `json:"expectedRuns,omitempty"`
 
 	// Job identifier
-	// Required: true
 	// Read Only: true
-	ID string `json:"id"`
+	ID int64 `json:"id,omitempty"`
 
 	// Whether to include a nominal baseline run for a DOE job
 	IncludeNominalRun bool `json:"includeNominalRun,omitempty"`
@@ -80,11 +79,6 @@ func (m *Job) Validate(formats strfmt.Registry) error {
 		res = append(res, err)
 	}
 
-	if err := m.validateID(formats); err != nil {
-		// prop
-		res = append(res, err)
-	}
-
 	if err := m.validateJobanalyses(formats); err != nil {
 		// prop
 		res = append(res, err)
@@ -126,15 +120,6 @@ func (m *Job) validateArchiveFilters(formats strfmt.Registry) error {
 			return err
 		}
 
-	}
-
-	return nil
-}
-
-func (m *Job) validateID(formats strfmt.Registry) error {
-
-	if err := validate.RequiredString("id", "body", string(m.ID)); err != nil {
-		return err
 	}
 
 	return nil

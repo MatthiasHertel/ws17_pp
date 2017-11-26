@@ -184,7 +184,6 @@ func init() {
     "job": {
       "type": "object",
       "required": [
-        "id",
         "name"
       ],
       "properties": {
@@ -205,7 +204,7 @@ func init() {
         },
         "id": {
           "description": "Job identifier",
-          "type": "string",
+          "type": "integer",
           "readOnly": true
         },
         "includeNominalRun": {
