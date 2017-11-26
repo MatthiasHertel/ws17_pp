@@ -4,7 +4,7 @@
 #     echo '$1 must be the local external ip of this host'
 #     exit 1
 # fi
-LOCALHOST_IP=$(ifconfig | sed -En 's/127.0.0.1//;s/.*inet (addr:)?(([0-9]*\.){3}[0-9]*).*/\2/p')
+LOCALHOST_IP=$(ifconfig docker0 | sed -En 's/127.0.0.1//;s/.*inet (addr:)?(([0-9]*\.){3}[0-9]*).*/\2/p')
 set -- $LOCALHOST_IP
 
 while [ 1 ]
