@@ -10,7 +10,9 @@ import (
 	runtime "github.com/go-openapi/runtime"
 	middleware "github.com/go-openapi/runtime/middleware"
 	graceful "github.com/tylerb/graceful"
+	"github.com/go-openapi/swag"
 
+	"2_rescale_api/models"
 	"2_rescale_api/restapi/operations"
 	"2_rescale_api/restapi/operations/jobs"
 )
@@ -18,6 +20,20 @@ import (
 // This file is safe to edit. Once it exists it will not be overwritten
 
 //go:generate swagger generate server --target .. --name JobList --spec ../swagger.yml
+var items = make(map[int64]*models.Job)
+
+func allItems(page int64, pagesize int64) (result []*models.Job) {
+	result = make([]*models.Job, 0)
+	for id, item := range items {
+		if len(result) >= int(pagesize) {
+			return
+		}
+		if page == 0 || id > page {
+			result = append(result, item)
+		}
+	}
+	return
+}
 
 func configureFlags(api *operations.JobListAPI) {
 	// api.CommandLineOptionsGroups = []swag.CommandLineOptionsGroup{ ... }
@@ -44,7 +60,15 @@ func configureAPI(api *operations.JobListAPI) http.Handler {
 		return middleware.NotImplemented("operation jobs.DestroyOne has not yet been implemented")
 	})
 	api.JobsFindJobsHandler = jobs.FindJobsHandlerFunc(func(params jobs.FindJobsParams) middleware.Responder {
-		return middleware.NotImplemented("operation jobs.FindJobs has not yet been implemented")
+		mergedParams := jobs.NewFindJobsParams()
+		mergedParams.Page = swag.Int64(0)
+		if params.Page != nil {
+			mergedParams.Page = params.Page
+		}
+		if params.PageSize != nil {
+			mergedParams.PageSize = params.PageSize
+		}
+		return jobs.NewFindJobsOK().WithPayload(allItems(*mergedParams.Page, *mergedParams.PageSize))
 	})
 	api.JobsUpdateOneHandler = jobs.UpdateOneHandlerFunc(func(params jobs.UpdateOneParams) middleware.Responder {
 		return middleware.NotImplemented("operation jobs.UpdateOne has not yet been implemented")
