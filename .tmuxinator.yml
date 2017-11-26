@@ -26,6 +26,7 @@ windows:
           - ./scripts/services/kong_compose_up.sh
         - seeding:
           - ./scripts/services/kong_seed_api.sh
+          - ./scripts/services/kong_seed_plugin_key-auth.sh
           - ./scripts/services/kong_seed_consumer.sh
   - minio:
       layout: main-horizontal
