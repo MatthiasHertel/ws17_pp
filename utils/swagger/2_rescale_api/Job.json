@@ -1,0 +1,118 @@
+{
+    "archiveFilters": [],
+    "caseFile": null,
+    "expectedRuns": 3,
+    "id": 20,
+    "includeNominalRun": false,
+    "isLowPriority": true,
+    "isTemplateDryRun": false,
+    "jobanalyses": [
+        {
+            "analysis": {
+                "code": "openfoam",
+                "name": "OpenFOAM",
+                "version": "2.3.1-openmpi",
+                "versionName": "2.3.1"
+            },
+            "command": "./airFoil2D_DOE/Allrun",
+            "envVars": {},
+            "flags": {},
+            "hardware": {
+                "coreSummary": {
+                    "memoryPerNode": 3750,
+                    "numberOfNodes": 1.0,
+                    "storagePerNode": 4000
+                },
+                "coreType": "standard-plus",
+                "coresPerSlot": 1,
+                "slots": 1,
+                "walltime": null
+            },
+            "inputFiles": [
+                {
+                    "dateUploaded": "2015-03-26T23:08:33.700457Z",
+                    "decryptedSize": 655816,
+                    "downloadUrl": "https://platform.rescale.com/api/v2/files/duMEdg/contents/",
+                    "encodedEncryptionKey": "NYhibURTMAMKNWmWiDuUZxn+oUaRwp8iExaECpU6Dwo=",
+                    "id": "duMEdg",
+                    "isDeleted": false,
+                    "isUploaded": true,
+                    "md5": "60c6492014f73ad0c08da866b4ce9160",
+                    "name": "airfoid2d_doe.tar.gz",
+                    "owner": "mark@rescale.com",
+                    "path": "user/user_KBdkT/airfoid2d_doe.tar.gz-12f94e2222a0feafea96d31e634af2c6",
+                    "relativePath": "airfoid2d_doe.tar.gz",
+                    "sharedWith": [],
+                    "typeId": 1,
+                    "viewInBrowser": false
+                }
+            ],
+            "postProcessScript": null,
+            "postProcessScriptCommand": "",
+            "preProcessScript": null,
+            "preProcessScriptCommand": "",
+            "templateTasks": [
+                {
+                    "processedFilename": "airFoil2D_DOE/0/U",
+                    "templateFile": {
+                        "dateUploaded": "2015-03-26T23:09:46.256315Z",
+                        "decryptedSize": 1344,
+                        "downloadUrl": "https://platform.rescale.com/api/v2/files/qEMEdg/contents/",
+                        "encodedEncryptionKey": "olx6Kn7vde1siRKoDqBRTkaT25k1x8P9IYy3PdhmFhk=",
+                        "id": "qEMEdg",
+                        "isDeleted": false,
+                        "isUploaded": true,
+                        "md5": "b4ae5cb300c8b3d1410231e8fd474110",
+                        "name": "utemplate",
+                        "owner": "mark@rescale.com",
+                        "path": "user/user_KBdkT/utemplate-2f3c3004f5909acf0b7cc2a56c5be35c",
+                        "relativePath": "utemplate",
+                        "sharedWith": [],
+                        "typeId": 2,
+                        "viewInBrowser": true
+                    }
+                }
+            ],
+            "useRescaleLicense": false
+        }
+    ],
+    "jobvariables": [
+        {
+            "displayOrder": 0,
+            "name": "Xvelocity",
+            "valueGeneratorSettings": {},
+            "valueGeneratorType": "",
+            "variableType": "Param"
+        },
+        {
+            "displayOrder": 1,
+            "name": "Yvelocity",
+            "valueGeneratorSettings": {},
+            "valueGeneratorType": "",
+            "variableType": "Param"
+        }
+    ],
+    "monteCarloIterations": null,
+    "name": "Untitled MatthiasHanni",
+    "optimizer": null,
+    "owner": "mark@rescale.com",
+    "paramFile": {
+        "dateUploaded": "2015-03-26T23:09:25.532849Z",
+        "decryptedSize": 55,
+        "downloadUrl": "https://platform.rescale.com/api/v2/files/sWErpg/contents/",
+        "encodedEncryptionKey": "6kvS7Y3M6HXFcHos0rLUcEf4hNyupzn8x1j7CUU3qko=",
+        "id": "sWErpg",
+        "isDeleted": false,
+        "isUploaded": true,
+        "md5": "9ba0663810a4568dece19b67533e2759",
+        "name": "freestreamvalue.csv",
+        "owner": "mark@rescale.com",
+        "path": "user/user_KBdkT/freestreamvalue.csv-5ebf0b8ddbf834ec2e8e7e727de91c82",
+        "relativePath": "freestreamvalue.csv",
+        "sharedWith": [],
+        "typeId": 3,
+        "viewInBrowser": true
+    },
+    "remoteVizConfig": null,
+    "resourceFilters": []
+}
