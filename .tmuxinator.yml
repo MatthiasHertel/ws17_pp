@@ -1,7 +1,7 @@
 name: hpc-rest-dev-env
 root: .
 
-startup_window: kong
+startup_window: working
 
 windows:
   - working:
