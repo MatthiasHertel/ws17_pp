@@ -46,6 +46,9 @@ func NewJobSimpleAPI(spec *loads.Document) *JobSimpleAPI {
 		JobsFindJobsHandler: jobs.FindJobsHandlerFunc(func(params jobs.FindJobsParams) middleware.Responder {
 			return middleware.NotImplemented("operation JobsFindJobs has not yet been implemented")
 		}),
+		JobsGetOneHandler: jobs.GetOneHandlerFunc(func(params jobs.GetOneParams) middleware.Responder {
+			return middleware.NotImplemented("operation JobsGetOne has not yet been implemented")
+		}),
 		JobsUpdateOneHandler: jobs.UpdateOneHandlerFunc(func(params jobs.UpdateOneParams) middleware.Responder {
 			return middleware.NotImplemented("operation JobsUpdateOne has not yet been implemented")
 		}),
@@ -84,6 +87,8 @@ type JobSimpleAPI struct {
 	JobsDestroyOneHandler jobs.DestroyOneHandler
 	// JobsFindJobsHandler sets the operation handler for the find jobs operation
 	JobsFindJobsHandler jobs.FindJobsHandler
+	// JobsGetOneHandler sets the operation handler for the get one operation
+	JobsGetOneHandler jobs.GetOneHandler
 	// JobsUpdateOneHandler sets the operation handler for the update one operation
 	JobsUpdateOneHandler jobs.UpdateOneHandler
 
@@ -159,6 +164,10 @@ func (o *JobSimpleAPI) Validate() error {
 
 	if o.JobsFindJobsHandler == nil {
 		unregistered = append(unregistered, "jobs.FindJobsHandler")
+	}
+
+	if o.JobsGetOneHandler == nil {
+		unregistered = append(unregistered, "jobs.GetOneHandler")
 	}
 
 	if o.JobsUpdateOneHandler == nil {
@@ -269,6 +278,11 @@ func (o *JobSimpleAPI) initHandlerCache() {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
 	o.handlers["GET"][""] = jobs.NewFindJobs(o.context, o.JobsFindJobsHandler)
+
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
+	o.handlers["GET"]["/{id}"] = jobs.NewGetOne(o.context, o.JobsGetOneHandler)
 
 	if o.handlers["PUT"] == nil {
 		o.handlers["PUT"] = make(map[string]http.Handler)

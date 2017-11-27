@@ -100,6 +100,35 @@ func init() {
       }
     },
     "/{id}": {
+      "get": {
+        "tags": [
+          "jobs"
+        ],
+        "operationId": "getOne",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/job"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/job"
+            }
+          },
+          "default": {
+            "description": "error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            }
+          }
+        }
+      },
       "put": {
         "tags": [
           "jobs"
