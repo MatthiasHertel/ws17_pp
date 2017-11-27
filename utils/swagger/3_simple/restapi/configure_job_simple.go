@@ -82,6 +82,24 @@ func deleteItem(id int64) error {
 	return nil
 }
 
+func updateItem(id int64, item *models.Job) error {
+	if item == nil {
+		return errors.New(500, "item must be present")
+	}
+
+	itemsLock.Lock()
+	defer itemsLock.Unlock()
+
+	_, exists := items[id]
+	if !exists {
+		return errors.NotFound("not found: item %d", id)
+	}
+
+	item.ID = id
+	items[id] = item
+	return nil
+}
+
 func configureFlags(api *operations.JobSimpleAPI) {
 	// api.CommandLineOptionsGroups = []swag.CommandLineOptionsGroup{ ... }
 }
@@ -124,6 +142,13 @@ func configureAPI(api *operations.JobSimpleAPI) http.Handler {
 			return jobs.NewDestroyOneDefault(500).WithPayload(&models.Error{Code: 500, Message: swag.String(err.Error())})
 		}
 		return jobs.NewDestroyOneNoContent()
+	})
+
+	api.JobsUpdateOneHandler = jobs.UpdateOneHandlerFunc(func(params jobs.UpdateOneParams) middleware.Responder {
+		if err := updateItem(params.ID, params.Body); err != nil {
+			return jobs.NewUpdateOneDefault(500).WithPayload(&models.Error{Code: 500, Message: swag.String(err.Error())})
+		}
+		return jobs.NewUpdateOneOK().WithPayload(params.Body)
 	})
 
 	api.ServerShutdown = func() {}
