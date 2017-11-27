@@ -24,11 +24,11 @@ import (
 
 //go:generate swagger generate server --target .. --name JobSimple --spec ../swagger.yml
 
-// var items = make(map[int64]*models.Job)
-var items = make(map[int64]*models.Job)
+// var jobItems = make(map[int64]*models.Job)
+var jobItems = make(map[int64]*models.Job)
 var lastID int64
 
-var itemsLock = &sync.Mutex{}
+var jobItemsLock = &sync.Mutex{}
 
 func newItemID() int64 {
 	return atomic.AddInt64(&lastID, 1)
@@ -42,8 +42,8 @@ func NewJob(jobname string) *models.Job {
 func allItems(page int64, page_size int64) (jobs []*models.Job) {
 	jobs = make([]*models.Job, 0)
 	// jobs = append(jobs, NewJob("test"))
-	fmt.Print(len(items))
-	for id, item := range items {
+	fmt.Print(len(jobItems))
+	for id, item := range jobItems {
 		if len(jobs) >= int(page_size) {
 			return
 		}
@@ -59,26 +59,26 @@ func addItem(item *models.Job) error {
 		return errors.New(500, "item must be present")
 	}
 
-	itemsLock.Lock()
-	defer itemsLock.Unlock()
+	jobItemsLock.Lock()
+	defer jobItemsLock.Unlock()
 
 	newID := newItemID()
 	item.ID = newID
-	items[newID] = item
+	jobItems[newID] = item
 
 	return nil
 }
 
 func deleteItem(id int64) error {
-	itemsLock.Lock()
-	defer itemsLock.Unlock()
+	jobItemsLock.Lock()
+	defer jobItemsLock.Unlock()
 
-	_, exists := items[id]
+	_, exists := jobItems[id]
 	if !exists {
 		return errors.NotFound("not found: item %d", id)
 	}
 
-	delete(items, id)
+	delete(jobItems, id)
 	return nil
 }
 
@@ -87,29 +87,29 @@ func updateItem(id int64, item *models.Job) error {
 		return errors.New(500, "item must be present")
 	}
 
-	itemsLock.Lock()
-	defer itemsLock.Unlock()
+	jobItemsLock.Lock()
+	defer jobItemsLock.Unlock()
 
-	_, exists := items[id]
+	_, exists := jobItems[id]
 	if !exists {
 		return errors.NotFound("not found: item %d", id)
 	}
 
 	item.ID = id
-	items[id] = item
+	jobItems[id] = item
 	return nil
 }
 
 func getItem(id int64, item *models.Job) (job *models.Job) {
-	itemsLock.Lock()
-	defer itemsLock.Unlock()
+	jobItemsLock.Lock()
+	defer jobItemsLock.Unlock()
 
-	_, exists := items[id]
+	_, exists := jobItems[id]
 	if !exists {
 		return nil
 	}
 
-	job = items[id]
+	job = jobItems[id]
 	return
 }
 
