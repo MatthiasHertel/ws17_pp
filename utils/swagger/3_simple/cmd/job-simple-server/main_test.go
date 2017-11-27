@@ -20,3 +20,21 @@ func TestApiAddJobs(t *testing.T) {
 	r := hpc.POST(t, posting)
 	ExpectStatus(t, r, 201)
 }
+
+func TestApiGetOneJob(t *testing.T) {
+	posting := NewConfig("/jobs/1", "forest").Header("Content-Type", "application/json")
+	r := hpc.GET(t, posting)
+	ExpectStatus(t, r, 200)
+}
+
+func TestApiUpdateJobs(t *testing.T) {
+	posting := NewConfig("/jobs/1", "forest").Header("Content-Type", "application/json").Body(`{"name" : "testupdate"}`)
+	r := hpc.PUT(t, posting)
+	ExpectStatus(t, r, 200)
+}
+
+func TestApiDeleteJobs(t *testing.T) {
+	posting := NewConfig("/jobs/1", "forest").Header("Content-Type", "application/json")
+	r := hpc.DELETE(t, posting)
+	ExpectStatus(t, r, 204)
+}
