@@ -39,16 +39,16 @@ func NewJob(jobname string) *models.Job {
 	return &models.Job{Name: &v}
 }
 
-func allItems(page int64, page_size int64) (result []*models.Job) {
-	result = make([]*models.Job, 0)
-	// result = append(result, NewJob("test"))
+func allItems(page int64, page_size int64) (jobs []*models.Job) {
+	jobs = make([]*models.Job, 0)
+	// jobs = append(jobs, NewJob("test"))
 	fmt.Print(len(items))
 	for id, item := range items {
-		if len(result) >= int(page_size) {
+		if len(jobs) >= int(page_size) {
 			return
 		}
 		if page == 0 || id > page {
-			result = append(result, item)
+			jobs = append(jobs, item)
 		}
 	}
 	return
@@ -100,7 +100,7 @@ func updateItem(id int64, item *models.Job) error {
 	return nil
 }
 
-func getItem(id int64, item *models.Job) (result *models.Job) {
+func getItem(id int64, item *models.Job) (job *models.Job) {
 	itemsLock.Lock()
 	defer itemsLock.Unlock()
 
@@ -109,7 +109,7 @@ func getItem(id int64, item *models.Job) (result *models.Job) {
 		return nil
 	}
 
-	result = items[id]
+	job = items[id]
 	return
 }
 
