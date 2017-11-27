@@ -69,6 +69,19 @@ func addItem(item *models.Job) error {
 	return nil
 }
 
+func deleteItem(id int64) error {
+	itemsLock.Lock()
+	defer itemsLock.Unlock()
+
+	_, exists := items[id]
+	if !exists {
+		return errors.NotFound("not found: item %d", id)
+	}
+
+	delete(items, id)
+	return nil
+}
+
 func configureFlags(api *operations.JobSimpleAPI) {
 	// api.CommandLineOptionsGroups = []swag.CommandLineOptionsGroup{ ... }
 }
@@ -104,6 +117,13 @@ func configureAPI(api *operations.JobSimpleAPI) http.Handler {
 		}
 		return jobs.NewFindJobsOK().WithPayload(allItems(*mergedParams.Page, *mergedParams.Pagesize))
 
+	})
+
+	api.JobsDestroyOneHandler = jobs.DestroyOneHandlerFunc(func(params jobs.DestroyOneParams) middleware.Responder {
+		if err := deleteItem(params.ID); err != nil {
+			return jobs.NewDestroyOneDefault(500).WithPayload(&models.Error{Code: 500, Message: swag.String(err.Error())})
+		}
+		return jobs.NewDestroyOneNoContent()
 	})
 
 	api.ServerShutdown = func() {}
