@@ -4,6 +4,7 @@ package restapi
 
 import (
 	"crypto/tls"
+	"fmt"
 	"net/http"
 	"sync"
 	"sync/atomic"
@@ -11,8 +12,8 @@ import (
 	errors "github.com/go-openapi/errors"
 	runtime "github.com/go-openapi/runtime"
 	middleware "github.com/go-openapi/runtime/middleware"
-	graceful "github.com/tylerb/graceful"
 	"github.com/go-openapi/swag"
+	graceful "github.com/tylerb/graceful"
 
 	"2_rescale_api/models"
 	"2_rescale_api/restapi/operations"
@@ -34,6 +35,7 @@ func newItemID() int64 {
 
 func allItems(page int64, page_size int64) (result []*models.Job) {
 	result = make([]*models.Job, 0)
+	fmt.Print(len(items))
 	for id, item := range items {
 		if len(result) >= int(page_size) {
 			return
