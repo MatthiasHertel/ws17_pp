@@ -267,27 +267,27 @@ func (o *JobSimpleAPI) initHandlerCache() {
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}
-	o.handlers["POST"][""] = jobs.NewAddOne(o.context, o.JobsAddOneHandler)
+	o.handlers["POST"]["/jobs"] = jobs.NewAddOne(o.context, o.JobsAddOneHandler)
 
 	if o.handlers["DELETE"] == nil {
 		o.handlers["DELETE"] = make(map[string]http.Handler)
 	}
-	o.handlers["DELETE"]["/{id}"] = jobs.NewDestroyOne(o.context, o.JobsDestroyOneHandler)
+	o.handlers["DELETE"]["/jobs/{id}"] = jobs.NewDestroyOne(o.context, o.JobsDestroyOneHandler)
 
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
-	o.handlers["GET"][""] = jobs.NewFindJobs(o.context, o.JobsFindJobsHandler)
+	o.handlers["GET"]["/jobs"] = jobs.NewFindJobs(o.context, o.JobsFindJobsHandler)
 
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
-	o.handlers["GET"]["/{id}"] = jobs.NewGetOne(o.context, o.JobsGetOneHandler)
+	o.handlers["GET"]["/jobs/{id}"] = jobs.NewGetOne(o.context, o.JobsGetOneHandler)
 
 	if o.handlers["PUT"] == nil {
 		o.handlers["PUT"] = make(map[string]http.Handler)
 	}
-	o.handlers["PUT"]["/{id}"] = jobs.NewUpdateOne(o.context, o.JobsUpdateOneHandler)
+	o.handlers["PUT"]["/jobs/{id}"] = jobs.NewUpdateOne(o.context, o.JobsUpdateOneHandler)
 
 }
 

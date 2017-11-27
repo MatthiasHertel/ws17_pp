@@ -29,7 +29,7 @@ func NewFindJobs(ctx *middleware.Context, handler FindJobsHandler) *FindJobs {
 	return &FindJobs{Context: ctx, Handler: handler}
 }
 
-/*FindJobs swagger:route GET / jobs findJobs
+/*FindJobs swagger:route GET /jobs jobs findJobs
 
 FindJobs find jobs API
 

@@ -6,7 +6,7 @@ info:
   title: 3 Simple Job
   version: 0.1.0
 paths:
-  /{id}:
+  /jobs/{id}:
     parameters:
       - type: integer
         format: int64
@@ -60,7 +60,7 @@ paths:
           description: error
           schema:
             $ref: "#/definitions/error"
-  /:
+  /jobs:
     get:
       tags:
         - jobs

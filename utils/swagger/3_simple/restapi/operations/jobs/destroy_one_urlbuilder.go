@@ -42,7 +42,7 @@ func (o *DestroyOneURL) SetBasePath(bp string) {
 func (o *DestroyOneURL) Build() (*url.URL, error) {
 	var result url.URL
 
-	var _path = "/{id}"
+	var _path = "/jobs/{id}"
 
 	id := swag.FormatInt64(o.ID)
 	if id != "" {

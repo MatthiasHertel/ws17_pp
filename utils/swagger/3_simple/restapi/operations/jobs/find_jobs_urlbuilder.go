@@ -42,7 +42,7 @@ func (o *FindJobsURL) SetBasePath(bp string) {
 func (o *FindJobsURL) Build() (*url.URL, error) {
 	var result url.URL
 
-	var _path = "/"
+	var _path = "/jobs"
 
 	_basePath := o._basePath
 	result.Path = golangswaggerpaths.Join(_basePath, _path)

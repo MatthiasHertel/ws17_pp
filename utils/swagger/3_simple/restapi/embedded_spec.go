@@ -30,7 +30,7 @@ func init() {
     "version": "0.1.0"
   },
   "paths": {
-    "/": {
+    "/jobs": {
       "get": {
         "tags": [
           "jobs"
@@ -99,7 +99,7 @@ func init() {
         }
       }
     },
-    "/{id}": {
+    "/jobs/{id}": {
       "get": {
         "tags": [
           "jobs"

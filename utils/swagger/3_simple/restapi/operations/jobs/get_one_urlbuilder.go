@@ -42,7 +42,7 @@ func (o *GetOneURL) SetBasePath(bp string) {
 func (o *GetOneURL) Build() (*url.URL, error) {
 	var result url.URL
 
-	var _path = "/{id}"
+	var _path = "/jobs/{id}"
 
 	id := swag.FormatInt64(o.ID)
 	if id != "" {

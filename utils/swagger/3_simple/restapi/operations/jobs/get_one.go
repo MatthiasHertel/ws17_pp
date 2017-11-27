@@ -29,7 +29,7 @@ func NewGetOne(ctx *middleware.Context, handler GetOneHandler) *GetOne {
 	return &GetOne{Context: ctx, Handler: handler}
 }
 
-/*GetOne swagger:route GET /{id} jobs getOne
+/*GetOne swagger:route GET /jobs/{id} jobs getOne
 
 GetOne get one API
 
