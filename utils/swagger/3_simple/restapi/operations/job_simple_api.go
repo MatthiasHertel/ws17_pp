@@ -40,8 +40,14 @@ func NewJobSimpleAPI(spec *loads.Document) *JobSimpleAPI {
 		JobsAddOneHandler: jobs.AddOneHandlerFunc(func(params jobs.AddOneParams) middleware.Responder {
 			return middleware.NotImplemented("operation JobsAddOne has not yet been implemented")
 		}),
+		JobsDestroyOneHandler: jobs.DestroyOneHandlerFunc(func(params jobs.DestroyOneParams) middleware.Responder {
+			return middleware.NotImplemented("operation JobsDestroyOne has not yet been implemented")
+		}),
 		JobsFindJobsHandler: jobs.FindJobsHandlerFunc(func(params jobs.FindJobsParams) middleware.Responder {
 			return middleware.NotImplemented("operation JobsFindJobs has not yet been implemented")
+		}),
+		JobsUpdateOneHandler: jobs.UpdateOneHandlerFunc(func(params jobs.UpdateOneParams) middleware.Responder {
+			return middleware.NotImplemented("operation JobsUpdateOne has not yet been implemented")
 		}),
 	}
 }
@@ -74,8 +80,12 @@ type JobSimpleAPI struct {
 
 	// JobsAddOneHandler sets the operation handler for the add one operation
 	JobsAddOneHandler jobs.AddOneHandler
+	// JobsDestroyOneHandler sets the operation handler for the destroy one operation
+	JobsDestroyOneHandler jobs.DestroyOneHandler
 	// JobsFindJobsHandler sets the operation handler for the find jobs operation
 	JobsFindJobsHandler jobs.FindJobsHandler
+	// JobsUpdateOneHandler sets the operation handler for the update one operation
+	JobsUpdateOneHandler jobs.UpdateOneHandler
 
 	// ServeError is called when an error is received, there is a default handler
 	// but you can set your own with this
@@ -143,8 +153,16 @@ func (o *JobSimpleAPI) Validate() error {
 		unregistered = append(unregistered, "jobs.AddOneHandler")
 	}
 
+	if o.JobsDestroyOneHandler == nil {
+		unregistered = append(unregistered, "jobs.DestroyOneHandler")
+	}
+
 	if o.JobsFindJobsHandler == nil {
 		unregistered = append(unregistered, "jobs.FindJobsHandler")
+	}
+
+	if o.JobsUpdateOneHandler == nil {
+		unregistered = append(unregistered, "jobs.UpdateOneHandler")
 	}
 
 	if len(unregistered) > 0 {
@@ -242,10 +260,20 @@ func (o *JobSimpleAPI) initHandlerCache() {
 	}
 	o.handlers["POST"][""] = jobs.NewAddOne(o.context, o.JobsAddOneHandler)
 
+	if o.handlers["DELETE"] == nil {
+		o.handlers["DELETE"] = make(map[string]http.Handler)
+	}
+	o.handlers["DELETE"]["/{id}"] = jobs.NewDestroyOne(o.context, o.JobsDestroyOneHandler)
+
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
 	o.handlers["GET"][""] = jobs.NewFindJobs(o.context, o.JobsFindJobsHandler)
+
+	if o.handlers["PUT"] == nil {
+		o.handlers["PUT"] = make(map[string]http.Handler)
+	}
+	o.handlers["PUT"]["/{id}"] = jobs.NewUpdateOne(o.context, o.JobsUpdateOneHandler)
 
 }
 
