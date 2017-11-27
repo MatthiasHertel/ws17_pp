@@ -1,0 +1,93 @@
+swagger: "2.0"
+consumes:
+- application/json
+info:
+  description: A simple Rest-Api to submit Fibonacci Job through Stack.
+  title: 3 Simple Job
+  version: 0.1.0
+paths:
+  /:
+    get:
+      tags:
+        - jobs
+      operationId: findJobs
+      parameters:
+        - name: page
+          in: query
+          type: integer
+          format: int64
+        - name: pagesize
+          in: query
+          type: integer
+          format: int64
+          default: 20
+      responses:
+        200:
+          description: list all created jobs
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/job"
+        default:
+          description: generic error response
+          schema:
+            $ref: "#/definitions/error"
+    post:
+      tags:
+        - jobs
+      operationId: addOne
+      parameters:
+        - name: body
+          in: body
+          schema:
+            $ref: "#/definitions/job"
+      responses:
+        201:
+          description: Created
+          schema:
+            $ref: "#/definitions/job"
+        default:
+          description: error
+          schema:
+            $ref: "#/definitions/error"
+definitions:
+  job:
+    type: object
+    required:
+      - name
+    properties:
+      id:
+        type: integer
+        description: Job Identifier
+        readOnly: true
+      name:
+        type: string
+        description: Job Description
+      quantifier:
+        type: integer
+        description: Job Quantifier
+      status:
+        type: string
+        description: Job Status
+        enum:
+          - "Completed"
+          - "Executing"
+          - "Validated"
+          - "Started"
+          - "Queued"
+          - "Pending"
+  error:
+    type: object
+    required:
+      - message
+    properties:
+      code:
+        type: integer
+        format: int64
+      message:
+        type: string
+
+produces:
+- application/json
+schemes:
+- http
