@@ -39,7 +39,7 @@ func NewJob(jobname string) *models.Job {
 	return &models.Job{Name: &v}
 }
 
-func allItems(page int64, page_size int64) (jobs []*models.Job) {
+func getAllJobItems(page int64, page_size int64) (jobs []*models.Job) {
 	jobs = make([]*models.Job, 0)
 	// jobs = append(jobs, NewJob("test"))
 	fmt.Print(len(jobItems))
@@ -54,7 +54,7 @@ func allItems(page int64, page_size int64) (jobs []*models.Job) {
 	return
 }
 
-func addItem(item *models.Job) error {
+func addJobItem(item *models.Job) error {
 	if item == nil {
 		return errors.New(500, "item must be present")
 	}
@@ -69,7 +69,7 @@ func addItem(item *models.Job) error {
 	return nil
 }
 
-func deleteItem(id int64) error {
+func deleteJobItem(id int64) error {
 	jobItemsLock.Lock()
 	defer jobItemsLock.Unlock()
 
@@ -82,7 +82,7 @@ func deleteItem(id int64) error {
 	return nil
 }
 
-func updateItem(id int64, item *models.Job) error {
+func updateJobItem(id int64, item *models.Job) error {
 	if item == nil {
 		return errors.New(500, "item must be present")
 	}
@@ -100,7 +100,7 @@ func updateItem(id int64, item *models.Job) error {
 	return nil
 }
 
-func getItem(id int64, item *models.Job) (job *models.Job) {
+func getJobItem(id int64, item *models.Job) (job *models.Job) {
 	jobItemsLock.Lock()
 	defer jobItemsLock.Unlock()
 
@@ -132,7 +132,7 @@ func configureAPI(api *operations.JobSimpleAPI) http.Handler {
 	api.JSONProducer = runtime.JSONProducer()
 
 	api.JobsAddOneHandler = jobs.AddOneHandlerFunc(func(params jobs.AddOneParams) middleware.Responder {
-		if err := addItem(params.Body); err != nil {
+		if err := addJobItem(params.Body); err != nil {
 			return jobs.NewAddOneDefault(500).WithPayload(&models.Error{Code: 500, Message: swag.String(err.Error())})
 		}
 		return jobs.NewAddOneCreated().WithPayload(params.Body)
@@ -146,29 +146,29 @@ func configureAPI(api *operations.JobSimpleAPI) http.Handler {
 		if params.Pagesize != nil {
 			mergedParams.Pagesize = params.Pagesize
 		}
-		return jobs.NewFindJobsOK().WithPayload(allItems(*mergedParams.Page, *mergedParams.Pagesize))
+		return jobs.NewFindJobsOK().WithPayload(getAllJobItems(*mergedParams.Page, *mergedParams.Pagesize))
 
 	})
 
 	api.JobsDestroyOneHandler = jobs.DestroyOneHandlerFunc(func(params jobs.DestroyOneParams) middleware.Responder {
-		if err := deleteItem(params.ID); err != nil {
+		if err := deleteJobItem(params.ID); err != nil {
 			return jobs.NewDestroyOneDefault(500).WithPayload(&models.Error{Code: 500, Message: swag.String(err.Error())})
 		}
 		return jobs.NewDestroyOneNoContent()
 	})
 
 	api.JobsUpdateOneHandler = jobs.UpdateOneHandlerFunc(func(params jobs.UpdateOneParams) middleware.Responder {
-		if err := updateItem(params.ID, params.Body); err != nil {
+		if err := updateJobItem(params.ID, params.Body); err != nil {
 			return jobs.NewUpdateOneDefault(500).WithPayload(&models.Error{Code: 500, Message: swag.String(err.Error())})
 		}
 		return jobs.NewUpdateOneOK().WithPayload(params.Body)
 	})
 
 	api.JobsGetOneHandler = jobs.GetOneHandlerFunc(func(params jobs.GetOneParams) middleware.Responder {
-		if getItem(params.ID, params.Body) == nil {
+		if getJobItem(params.ID, params.Body) == nil {
 			return jobs.NewUpdateOneDefault(404).WithPayload(&models.Error{Code: 404, Message: swag.String("Not Found")})
 		}
-		return jobs.NewGetOneOK().WithPayload(getItem(params.ID, params.Body))
+		return jobs.NewGetOneOK().WithPayload(getJobItem(params.ID, params.Body))
 	})
 
 	api.ServerShutdown = func() {}
