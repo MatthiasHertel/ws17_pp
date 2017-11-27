@@ -100,6 +100,19 @@ func updateItem(id int64, item *models.Job) error {
 	return nil
 }
 
+func getItem(id int64, item *models.Job) (result *models.Job) {
+	itemsLock.Lock()
+	defer itemsLock.Unlock()
+
+	_, exists := items[id]
+	if !exists {
+		return nil
+	}
+
+	result = items[id]
+	return
+}
+
 func configureFlags(api *operations.JobSimpleAPI) {
 	// api.CommandLineOptionsGroups = []swag.CommandLineOptionsGroup{ ... }
 }
@@ -149,6 +162,13 @@ func configureAPI(api *operations.JobSimpleAPI) http.Handler {
 			return jobs.NewUpdateOneDefault(500).WithPayload(&models.Error{Code: 500, Message: swag.String(err.Error())})
 		}
 		return jobs.NewUpdateOneOK().WithPayload(params.Body)
+	})
+
+	api.JobsGetOneHandler = jobs.GetOneHandlerFunc(func(params jobs.GetOneParams) middleware.Responder {
+		if getItem(params.ID, params.Body) == nil {
+			return jobs.NewUpdateOneDefault(404).WithPayload(&models.Error{Code: 404, Message: swag.String("Not Found")})
+		}
+		return jobs.NewGetOneOK().WithPayload(getItem(params.ID, params.Body))
 	})
 
 	api.ServerShutdown = func() {}
