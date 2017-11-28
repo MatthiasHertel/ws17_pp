@@ -1,5 +1,5 @@
 {
-  "name": "testjob1",
-  "quantifier": null,
-  "status": null
+  "name": "testjob2",
+  "quantifier": 10,
+  "status": "Completed"
 }

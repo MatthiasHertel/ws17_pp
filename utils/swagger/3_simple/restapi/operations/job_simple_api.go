@@ -20,6 +20,7 @@ import (
 	"github.com/go-openapi/swag"
 
 	"3_simple/restapi/operations/jobs"
+	"3_simple/restapi/operations/lists"
 )
 
 // NewJobSimpleAPI creates a new JobSimple instance
@@ -45,6 +46,9 @@ func NewJobSimpleAPI(spec *loads.Document) *JobSimpleAPI {
 		}),
 		JobsFindJobsHandler: jobs.FindJobsHandlerFunc(func(params jobs.FindJobsParams) middleware.Responder {
 			return middleware.NotImplemented("operation JobsFindJobs has not yet been implemented")
+		}),
+		ListsFindListHandler: lists.FindListHandlerFunc(func(params lists.FindListParams) middleware.Responder {
+			return middleware.NotImplemented("operation ListsFindList has not yet been implemented")
 		}),
 		JobsGetOneHandler: jobs.GetOneHandlerFunc(func(params jobs.GetOneParams) middleware.Responder {
 			return middleware.NotImplemented("operation JobsGetOne has not yet been implemented")
@@ -87,6 +91,8 @@ type JobSimpleAPI struct {
 	JobsDestroyOneHandler jobs.DestroyOneHandler
 	// JobsFindJobsHandler sets the operation handler for the find jobs operation
 	JobsFindJobsHandler jobs.FindJobsHandler
+	// ListsFindListHandler sets the operation handler for the find list operation
+	ListsFindListHandler lists.FindListHandler
 	// JobsGetOneHandler sets the operation handler for the get one operation
 	JobsGetOneHandler jobs.GetOneHandler
 	// JobsUpdateOneHandler sets the operation handler for the update one operation
@@ -164,6 +170,10 @@ func (o *JobSimpleAPI) Validate() error {
 
 	if o.JobsFindJobsHandler == nil {
 		unregistered = append(unregistered, "jobs.FindJobsHandler")
+	}
+
+	if o.ListsFindListHandler == nil {
+		unregistered = append(unregistered, "lists.FindListHandler")
 	}
 
 	if o.JobsGetOneHandler == nil {
@@ -278,6 +288,11 @@ func (o *JobSimpleAPI) initHandlerCache() {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
 	o.handlers["GET"]["/jobs"] = jobs.NewFindJobs(o.context, o.JobsFindJobsHandler)
+
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
+	o.handlers["GET"][""] = lists.NewFindList(o.context, o.ListsFindListHandler)
 
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)

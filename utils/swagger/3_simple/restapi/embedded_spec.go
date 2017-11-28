@@ -30,6 +30,31 @@ func init() {
     "version": "0.1.0"
   },
   "paths": {
+    "/": {
+      "get": {
+        "tags": [
+          "lists"
+        ],
+        "operationId": "findList",
+        "responses": {
+          "200": {
+            "description": "list all jobs",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/list"
+              }
+            }
+          },
+          "default": {
+            "description": "generic error response",
+            "schema": {
+              "$ref": "#/definitions/error"
+            }
+          }
+        }
+      }
+    },
     "/jobs": {
       "get": {
         "tags": [
@@ -232,6 +257,30 @@ func init() {
             "Queued",
             "Pending"
           ]
+        }
+      }
+    },
+    "list": {
+      "type": "object",
+      "properties": {
+        "count": {
+          "description": "amount of jobs",
+          "type": "integer",
+          "readOnly": true
+        },
+        "next": {
+          "description": "next result",
+          "type": "string"
+        },
+        "previous": {
+          "description": "previous result",
+          "type": "string"
+        },
+        "results": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/job"
+          }
         }
       }
     }

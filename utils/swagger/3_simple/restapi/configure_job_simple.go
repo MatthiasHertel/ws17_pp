@@ -9,6 +9,7 @@ import (
 	"sync"
 	"sync/atomic"
 
+	"github.com/davecgh/go-spew/spew"
 	errors "github.com/go-openapi/errors"
 	runtime "github.com/go-openapi/runtime"
 	middleware "github.com/go-openapi/runtime/middleware"
@@ -18,6 +19,7 @@ import (
 	"3_simple/models"
 	"3_simple/restapi/operations"
 	"3_simple/restapi/operations/jobs"
+	"3_simple/restapi/operations/lists"
 )
 
 // This file is safe to edit. Once it exists it will not be overwritten
@@ -26,6 +28,7 @@ import (
 
 // var jobItems = make(map[int64]*models.Job)
 var jobItems = make(map[int64]*models.Job)
+var listItems = make(map[int64]*models.List)
 var lastID int64
 
 var jobItemsLock = &sync.Mutex{}
@@ -39,8 +42,21 @@ func NewJob(jobname string) *models.Job {
 	return &models.Job{Name: &v}
 }
 
+func getList() (lists []*models.List) {
+	getAllJobItems(20, 20)
+	lists = make([]*models.List, 0)
+
+	spew.Dump(lists)
+	for _, item := range listItems {
+		lists = append(lists, item)
+	}
+	spew.Dump(lists)
+	return
+}
+
 func getAllJobItems(page int64, page_size int64) (jobs []*models.Job) {
 	jobs = make([]*models.Job, 0)
+	spew.Dump(jobs)
 	// jobs = append(jobs, NewJob("test"))
 	fmt.Print(len(jobItems))
 	for id, item := range jobItems {
@@ -51,6 +67,7 @@ func getAllJobItems(page int64, page_size int64) (jobs []*models.Job) {
 			jobs = append(jobs, item)
 		}
 	}
+	spew.Dump(jobs)
 	return
 }
 
@@ -148,6 +165,10 @@ func configureAPI(api *operations.JobSimpleAPI) http.Handler {
 		}
 		return jobs.NewFindJobsOK().WithPayload(getAllJobItems(*mergedParams.Page, *mergedParams.Pagesize))
 
+	})
+
+	api.ListsFindListHandler = lists.FindListHandlerFunc(func(params lists.FindListParams) middleware.Responder {
+		return lists.NewFindListOK().WithPayload(getList())
 	})
 
 	api.JobsDestroyOneHandler = jobs.DestroyOneHandlerFunc(func(params jobs.DestroyOneParams) middleware.Responder {

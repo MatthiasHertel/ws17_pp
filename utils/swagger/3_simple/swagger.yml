@@ -60,6 +60,22 @@ paths:
           description: error
           schema:
             $ref: "#/definitions/error"
+  /:
+    get:
+      tags:
+        - lists
+      operationId: findList
+      responses:
+        200:
+          description: list all jobs
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/list"
+        default:
+          description: generic error response
+          schema:
+            $ref: "#/definitions/error"
   /jobs:
     get:
       tags:
@@ -105,6 +121,23 @@ paths:
           schema:
             $ref: "#/definitions/error"
 definitions:
+  list:
+    type: object
+    properties:
+      count:
+        type: integer
+        description: amount of jobs
+        readOnly: true
+      next:
+        type: string
+        description: next result
+      previous:
+        type: string
+        description: previous result
+      results:
+        type: array
+        items:
+          $ref: "#/definitions/job"
   job:
     type: object
     required:
