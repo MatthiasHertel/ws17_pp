@@ -1,7 +1,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% LaTeX Template: Softwaretechnik SS 2017
+% LaTeX Template: Praxisprojekt WS 2017
 %
-% Date: April 2017
+% Date: November 2017
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -19,7 +19,7 @@
 \usepackage{sectsty}
 \usepackage{url, lipsum}
 \usepackage[parfill]{parskip}
-
+\usepackage{listings}
 
 %-------------------------------------------------------------------------------
 % Commands
@@ -45,7 +45,7 @@
 \title{ \normalsize
 		\HRule{0.5pt} \\
 		\LARGE \textbf{\uppercase{\newCommandDiscipline}} \\
-    \smallbreak
+		\smallbreak
 		\small\textbf{{\newCommandTerm}}\\
 		\HRule{2pt} \\ [0.5cm]
 		\normalsize \today \vspace*{10\baselineskip}}
@@ -77,23 +77,54 @@
 % BODY
 %-------------------------------------------------------------------------------
 
-\section{LE Description}
-
-\subsection{Task \#}
-\subsubsection*{Aufgabe:}
-
-% Aufgabe framed
-\begin{framed}
-\textbf{Task Topic}
+\section{Statusbericht}
+\subsection{Was habe ich bisher im Projekt erreicht?}
+\begin{itemize}
+\item Security abgeschlossen - Kong Api-Gateway etabliert
+\item S3 abgeschlossen - Minio Objectstorage
+\item Job-Mock entworfen (Fibonacci - ``intentionally slow'')
+\item Architecture High-Level definiert
+\item Swagger getestet und Funktionalitaet adaptiert
+% \item Automatisierung in der Entwicklungsumgebung implentiert
+\end{itemize}
 \smallbreak
-Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-\\
-Lorem ipsum dolor sit amet.
-\bigbreak
-\small Bearbeitungszeit: xx Minuten
-\end{framed}
-\bigbreak
-\bigbreak
-\subsubsection*{L"osung:}
-Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+
+\begin{figure}[!htp]
+	\includegraphics[width=1\textwidth]{./img/Architecture.png}
+	\captionsetup{name=Abb.,font=footnotesize}
+	\caption{Architecture High-Level}
+	% \centering
+\end{figure}
+
+\subsection{Was habe ich bis zum n"achsten Statusbericht vor?}
+
+
+\begin{itemize}
+\item Kompletter Durchlauf der Api-Architectur
+\begin{itemize}
+	\item 1. Job erstellen
+	\item 2. Job submitten
+	\item 3. Solver Gateway - Nomad Scheduling of Jobs
+	\item 4. Send Results back to client
+\end{itemize}
+\item Spezifizieren der Api (analog Rescale Api)
+\item Dokumentation der Api
+\item Persistence-Layer der Api (Jobs und deren Results werden in einer Datenbank gespeichert)
+\end{itemize}
+
+Dokumentation der Issues werden direkt im Repository gef"uhrt.
+\subsection{Gibt es Probleme bei der Durchf"uhrung?}
+\begin{itemize}
+\item Es gab Probleme mit Swagger so dass ich die Umsetzung mit Hilfe dessen verworfen habe. Die Komplexit"at des generierten Codes war zu hoch. Ich denke ich mache es ``completely from scratch''.
+\end{itemize}
+
+
+\section{Ressourcen}
+\textbf{Git-Repository als Versionskontrolle:}\\
+\url{https://github.com/MatthiasHertel/ws17_pp}
+
+\textbf{Webseite zur Dokumentation:}\\
+\url{https://www.ws17-pp.mhertel.de}
+
+
 \end{document}
