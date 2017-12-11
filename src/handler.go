@@ -6,6 +6,7 @@ import (
 	"io"
 	"io/ioutil"
 	"net/http"
+	"strconv"
 
 	"github.com/gorilla/mux"
 )
@@ -24,8 +25,15 @@ func JobIndex(w http.ResponseWriter, r *http.Request) {
 
 func JobShow(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
-	jobId := vars["jobId"]
-	fmt.Fprintln(w, "Job show:", jobId)
+	jobId, _ := strconv.Atoi(vars["jobId"])
+
+	job := RepoFindJob(jobId)
+
+	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
+	w.WriteHeader(http.StatusOK)
+	if err := json.NewEncoder(w).Encode(job); err != nil {
+		panic(err)
+	}
 }
 
 func JobCreate(w http.ResponseWriter, r *http.Request) {
