@@ -5,7 +5,7 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/MatthiasHertel/ws17_pp"
+	"github.com/MatthiasHertel/ws17_pp/src"
 )
 
 func main() {
