@@ -1,7 +1,21 @@
 # ws17_pp
 Praxisprojekt (BHTB MIB 13 W17)
 
+## Dokumentation:
 https://www.ws17-pp.mhertel.de
+
+## Routing of the API
+
+**Endpoints Jobs:**
+```
+URI: /jobs          METHOD: GET         DESC: Retrieve all Jobs
+URI: /jobs          METHOD: POST        DESC: Create a new Job
+URI: /jobs          METHOD: PUT         DESC: Update an existing Job
+URI: /jobs          METHOD: DELETE      DESC: Delete an exisiting Job
+URI: /jobs/{id}     METHOD: GET         DESC: Get specific job
+```
+
+
 
 ## Development
 
