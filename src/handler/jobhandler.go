@@ -10,11 +10,11 @@ import (
 	"gopkg.in/mgo.v2/bson"
 )
 
-var dao = repository.JobsRepo{}
+var jobRepository = repository.JobsRepo{}
 
 // AllJobsEndPoint GET list of jobs
 func AllJobsEndPoint(w http.ResponseWriter, r *http.Request) {
-	jobs, err := dao.FindAll()
+	jobs, err := jobRepository.FindAll()
 	if err != nil {
 		respondWithError(w, http.StatusInternalServerError, err.Error())
 		return
@@ -25,7 +25,7 @@ func AllJobsEndPoint(w http.ResponseWriter, r *http.Request) {
 // FindJobEndpoint GET a job by ID
 func FindJobEndpoint(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
-	job, err := dao.FindById(params["id"])
+	job, err := jobRepository.FindByID(params["id"])
 	if err != nil {
 		respondWithError(w, http.StatusBadRequest, "Invalid Job ID")
 		return
@@ -44,7 +44,7 @@ func CreateJobEndPoint(w http.ResponseWriter, r *http.Request) {
 	}
 	job.ID = bson.NewObjectId()
 
-	if err := dao.Insert(job); err != nil {
+	if err := jobRepository.Insert(job); err != nil {
 		respondWithError(w, http.StatusInternalServerError, err.Error())
 		return
 	}
@@ -59,7 +59,7 @@ func UpdateJobEndPoint(w http.ResponseWriter, r *http.Request) {
 		respondWithError(w, http.StatusBadRequest, "Invalid request payload")
 		return
 	}
-	if err := dao.Update(job); err != nil {
+	if err := jobRepository.Update(job); err != nil {
 		respondWithError(w, http.StatusInternalServerError, err.Error())
 		return
 	}
@@ -74,7 +74,7 @@ func DeleteJobEndPoint(w http.ResponseWriter, r *http.Request) {
 		respondWithError(w, http.StatusBadRequest, "Invalid request payload")
 		return
 	}
-	if err := dao.Delete(job); err != nil {
+	if err := jobRepository.Delete(job); err != nil {
 		respondWithError(w, http.StatusInternalServerError, err.Error())
 		return
 	}
