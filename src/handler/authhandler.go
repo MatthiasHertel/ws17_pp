@@ -1,4 +1,4 @@
-package ws17_pp
+package handler
 
 import (
 	"encoding/base64"
@@ -6,6 +6,9 @@ import (
 	"strings"
 )
 
+// BasicAuth  RFC 2617
+// Serverside: WWW-Authenticate: Basic realm="Restricted"
+// Clientside: Authorization: Basic d2lraTpwZWRpYQ==
 func BasicAuth(h http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 

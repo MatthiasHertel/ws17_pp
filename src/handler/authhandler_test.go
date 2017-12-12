@@ -1,4 +1,4 @@
-package ws17_pp
+package handler
 
 import (
 	"encoding/base64"
@@ -12,6 +12,12 @@ func basicAuth(username, password string) string {
 	auth := username + ":" + password
 	return base64.StdEncoding.EncodeToString([]byte(auth))
 }
+
+//https://godoc.org/github.com/BurntSushi/toml#Decode
+// var tomlBlob = `
+// server="localhost"
+// database="hpc-rest-api"
+// `
 
 // TODO
 func TestServerSendsHeader(t *testing.T) {}
