@@ -26,6 +26,7 @@ func AllJobsEndPoint(w http.ResponseWriter, r *http.Request) {
 func FindJobEndpoint(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	job, err := jobRepository.FindByID(params["jobID"])
+	job.Templates, err = templateRepository.FindTemplateByJobID(params["jobID"])
 	if err != nil {
 		respondWithError(w, http.StatusBadRequest, "Invalid Job ID")
 		return
