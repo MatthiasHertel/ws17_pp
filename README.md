@@ -17,11 +17,11 @@ URI: /jobs/{jobID}                            METHOD: GET         DESC: Get spec
 
 **Endpoints Templates:**
 ```
-URI: /jobs/{jobID}/templates                  METHOD: GET         DESC: Retrieve all Jobs
-URI: /jobs/{jobID}/templates                  METHOD: POST        DESC: Create a new Job
-URI: /jobs/{jobID}/templates                  METHOD: PUT         DESC: Update an existing Job
-URI: /jobs/{jobID}/templates                  METHOD: DELETE      DESC: Delete an exisiting Job
-URI: /jobs/{jobID}/templates/{templateID}     METHOD: GET         DESC: Get specific job
+URI: /jobs/{jobID}/templates                  METHOD: GET         DESC: Retrieve all Templates for Job
+URI: /jobs/{jobID}/templates                  METHOD: POST        DESC: Create a new Template for Job
+URI: /jobs/{jobID}/templates                  METHOD: PUT         DESC: Update an existing Template
+URI: /jobs/{jobID}/templates                  METHOD: DELETE      DESC: Delete an exisiting Template
+URI: /jobs/{jobID}/templates/{templateID}     METHOD: GET         DESC: Get specific Template
 ```
 
 ## Models
