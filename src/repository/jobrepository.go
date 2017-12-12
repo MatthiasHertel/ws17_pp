@@ -23,16 +23,16 @@ const (
 )
 
 var config = connection.Config{}
-var dao = JobsRepo{}
+var jobsRepo = JobsRepo{}
 
 // Parse the configuration file 'config.toml', and establish a connection to DB
 func init() {
 	config.Read()
 
-	dao.Server = config.Server
-	dao.Database = config.Database
+	jobsRepo.Server = config.Server
+	jobsRepo.Database = config.Database
 
-	dao.Connect()
+	jobsRepo.Connect()
 }
 
 // Connect Establish a connection to database
@@ -46,6 +46,7 @@ func (m *JobsRepo) Connect() {
 
 // FindAll Find list of Jobs
 func (m *JobsRepo) FindAll() ([]models.Job, error) {
+
 	var Jobs []models.Job
 	err := db.C(COLLECTION).Find(bson.M{}).All(&Jobs)
 	return Jobs, err
