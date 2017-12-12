@@ -8,11 +8,41 @@ https://www.ws17-pp.mhertel.de
 
 **Endpoints Jobs:**
 ```
-URI: /jobs          METHOD: GET         DESC: Retrieve all Jobs
-URI: /jobs          METHOD: POST        DESC: Create a new Job
-URI: /jobs          METHOD: PUT         DESC: Update an existing Job
-URI: /jobs          METHOD: DELETE      DESC: Delete an exisiting Job
-URI: /jobs/{id}     METHOD: GET         DESC: Get specific job
+URI: /jobs                                    METHOD: GET         DESC: Retrieve all Jobs
+URI: /jobs                                    METHOD: POST        DESC: Create a new Job
+URI: /jobs                                    METHOD: PUT         DESC: Update an existing Job
+URI: /jobs                                    METHOD: DELETE      DESC: Delete an exisiting Job
+URI: /jobs/{jobID}                            METHOD: GET         DESC: Get specific job
+```
+
+**Endpoints Templates:**
+```
+URI: /jobs/{jobID}/templates                  METHOD: GET         DESC: Retrieve all Jobs
+URI: /jobs/{jobID}/templates                  METHOD: POST        DESC: Create a new Job
+URI: /jobs/{jobID}/templates                  METHOD: PUT         DESC: Update an existing Job
+URI: /jobs/{jobID}/templates                  METHOD: DELETE      DESC: Delete an exisiting Job
+URI: /jobs/{jobID}/templates/{templateID}     METHOD: GET         DESC: Get specific job
+```
+
+## Models
+
+```
+type Job struct {
+	ID          bson.ObjectId `bson:"_id" json:"id"`
+	Name        string        `bson:"name" json:"name"`
+	Description string        `bson:"description" json:"description"`
+	Param       string        `bson:"param" json:"param"`
+	Templates   []Template    `bson:"templates" json:"templates"`
+}
+```
+
+```
+type Template struct {
+	ID    bson.ObjectId `bson:"_id" json:"id"`
+	JobID string        `bson:"jobid" json:"jobid"`
+	Name  string        `bson:"name" json:"name"`
+	Path  string        `bson:"path" json:"path"`
+}
 ```
 
 
