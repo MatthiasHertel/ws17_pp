@@ -25,7 +25,7 @@ func AllJobsEndPoint(w http.ResponseWriter, r *http.Request) {
 // FindJobEndpoint GET a job by ID
 func FindJobEndpoint(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
-	job, err := jobRepository.FindByID(params["id"])
+	job, err := jobRepository.FindByID(params["jobID"])
 	if err != nil {
 		respondWithError(w, http.StatusBadRequest, "Invalid Job ID")
 		return

@@ -17,7 +17,7 @@ func NewRouter() *mux.Router {
 	router.Handle("/jobs", ch.ThenFunc(handler.CreateJobEndPoint)).Methods("POST")
 	router.Handle("/jobs", ch.ThenFunc(handler.UpdateJobEndPoint)).Methods("PUT")
 	router.Handle("/jobs", ch.ThenFunc(handler.DeleteJobEndPoint)).Methods("DELETE")
-	router.Handle("/jobs/{id}", ch.ThenFunc(handler.FindJobEndpoint)).Methods("GET")
+	router.Handle("/jobs/{jobID}", ch.ThenFunc(handler.FindJobEndpoint)).Methods("GET")
 
 	router.Handle("/", ch.ThenFunc(handler.IndexHandler))
 	return router
