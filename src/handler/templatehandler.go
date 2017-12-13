@@ -14,9 +14,23 @@ var templateRepository = repository.TemplatesRepo{}
 
 // AllTemplatesEndPoint GET list of templates
 func AllTemplatesEndPoint(w http.ResponseWriter, r *http.Request) {
-	templates, err := templateRepository.FindAll()
+	params := mux.Vars(r)
+	if !bson.IsObjectIdHex(params["jobID"]) {
+		respondWithError(w, http.StatusBadRequest, "Invalid Job ID")
+		return
+	}
+	_, err := jobRepository.FindByID(params["jobID"])
+	if err != nil {
+		respondWithJSON(w, http.StatusNotFound, "No Job found")
+		return
+	}
+	templates, err := templateRepository.FindTemplateByJobID(params["jobID"])
 	if err != nil {
 		respondWithError(w, http.StatusInternalServerError, err.Error())
+		return
+	}
+	if templates == nil {
+		respondWithJSON(w, http.StatusNotFound, "No Templates found")
 		return
 	}
 	respondWithJSON(w, http.StatusOK, templates)
