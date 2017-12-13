@@ -15,6 +15,9 @@ var jobRepository = repository.JobsRepo{}
 // AllJobsEndPoint GET list of jobs
 func AllJobsEndPoint(w http.ResponseWriter, r *http.Request) {
 	jobs, err := jobRepository.FindAll()
+	for i := range jobs {
+		jobs[i].Templates, err = templateRepository.FindTemplateByJobID(jobs[i].ID.Hex())
+	}
 	if err != nil {
 		respondWithError(w, http.StatusInternalServerError, err.Error())
 		return
