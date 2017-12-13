@@ -25,9 +25,13 @@ func AllTemplatesEndPoint(w http.ResponseWriter, r *http.Request) {
 // FindTemplateEndpoint GET a template by ID
 func FindTemplateEndpoint(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
+	if !bson.IsObjectIdHex(params["templateID"]) {
+		respondWithError(w, http.StatusBadRequest, "Invalid Template ID")
+		return
+	}
 	template, err := templateRepository.FindByID(params["templateID"])
 	if err != nil {
-		respondWithError(w, http.StatusBadRequest, "Invalid dTemplate ID")
+		respondWithError(w, http.StatusNotFound, err.Error())
 		return
 	}
 	respondWithJSON(w, http.StatusOK, template)

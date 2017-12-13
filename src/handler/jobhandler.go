@@ -25,10 +25,14 @@ func AllJobsEndPoint(w http.ResponseWriter, r *http.Request) {
 // FindJobEndpoint GET a job by ID
 func FindJobEndpoint(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
+	if !bson.IsObjectIdHex(params["jobID"]) {
+		respondWithError(w, http.StatusBadRequest, "Invalid Job ID")
+		return
+	}
 	job, err := jobRepository.FindByID(params["jobID"])
 	job.Templates, err = templateRepository.FindTemplateByJobID(params["jobID"])
 	if err != nil {
-		respondWithError(w, http.StatusBadRequest, "Invalid Job ID")
+		respondWithError(w, http.StatusNotFound, err.Error())
 		return
 	}
 	respondWithJSON(w, http.StatusOK, job)
@@ -44,7 +48,6 @@ func CreateJobEndPoint(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	job.ID = bson.NewObjectId()
-
 	if err := jobRepository.Insert(job); err != nil {
 		respondWithError(w, http.StatusInternalServerError, err.Error())
 		return
