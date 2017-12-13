@@ -1,52 +1,54 @@
 package handler
 
 import (
-	"encoding/json"
-	"io/ioutil"
-	"log"
+	"fmt"
 	"net/http"
 	"net/http/httptest"
 	"testing"
 
 	"github.com/gorilla/mux"
+	"github.com/justinas/alice"
 )
 
+func Router1() *mux.Router {
+	router1 := mux.NewRouter()
+	router1.HandleFunc("/jobs", AllJobsEndPoint).Methods("GET")
+	return router1
+}
+
+// https://www.thepolyglotdeveloper.com/2017/02/unit-testing-golang-application-includes-http/
 func TestAllJobsEndPoint(t *testing.T) {
-
-	// a.Router = mux.NewRouter()
-
-	req, err := http.NewRequest("GET", "/jobssss/23", nil)
-	if err != nil {
-		t.Fatal(err)
-	}
-	response := executeRequest(req)
-
-	checkResponseCode(t, http.StatusNotFound, response.Code)
-
-	var m map[string]string
-	json.Unmarshal(response.Body.Bytes(), &m)
-	log.Print(m)
-
-	bodyBytes, _ := ioutil.ReadAll(response.Body)
-	bodyString := string(bodyBytes)
-	log.Print(bodyString)
-	// if m["error"] != "not found" {
-	// 	t.Errorf("Expected the 'error' key of the response to be set to 'Product not found'. Got '%s'", m["error"])
-	// }
-}
-
-func executeRequest(req *http.Request) *httptest.ResponseRecorder {
-	// We create a ResponseRecorder (which satisfies http.ResponseWriter) to record the response.
+	request1, _ := http.NewRequest("GET", "/jobs", nil)
 	rr := httptest.NewRecorder()
-	// handler := http.HandlerFunc(AllJobsEndPoint)
-	a := mux.NewRouter()
-	a.ServeHTTP(rr, req)
+	Router1().ServeHTTP(rr, request1)
 
-	return rr
+	fmt.Print(rr.Body)
+
+	// Check the status code is what we expect.
+	if status := rr.Code; status != http.StatusOK {
+		t.Errorf("handler returned wrong status code: got %v want %v",
+			status, http.StatusOK)
+	}
+}
+func Router2() *mux.Router {
+	router2 := mux.NewRouter()
+	ch := alice.New()
+	// router2.Handle("/jobs/5a3184949ebea40b903a1e55", FindJobEndpoint).Methods("GET")
+	router2.Handle("/jobs/{jobID}", ch.ThenFunc(FindJobEndpoint)).Methods("GET")
+	return router2
 }
 
-func checkResponseCode(t *testing.T, expected, actual int) {
-	if expected != actual {
-		t.Errorf("Expected response code %d. Got %d\n", expected, actual)
+// https://www.thepolyglotdeveloper.com/2017/02/unit-testing-golang-application-includes-http/
+func TestFindJobEndpoint(t *testing.T) {
+	request2, _ := http.NewRequest("GET", "/jobs/5a3184949ebea40b903a1e55", nil)
+	rr2 := httptest.NewRecorder()
+	Router2().ServeHTTP(rr2, request2)
+
+	fmt.Print(rr2.Body)
+
+	// Check the status code is what we expect.
+	if status := rr2.Code; status != http.StatusOK {
+		t.Errorf("handler returned wrong status code: got %v want %v",
+			status, http.StatusOK)
 	}
 }

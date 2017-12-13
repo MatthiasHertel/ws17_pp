@@ -4,17 +4,20 @@ import (
 	"net/http"
 	"net/http/httptest"
 	"testing"
+
+	"github.com/gorilla/mux"
 )
 
-func TestIndexHandler(t *testing.T) {
-	req, err := http.NewRequest("GET", "/", nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+func Router() *mux.Router {
+	router := mux.NewRouter()
+	router.HandleFunc("/", IndexHandler).Methods("GET")
+	return router
+}
 
+func TestIndexHandler(t *testing.T) {
+	request, _ := http.NewRequest("GET", "/", nil)
 	rr := httptest.NewRecorder()
-	handler := http.HandlerFunc(IndexHandler)
-	handler.ServeHTTP(rr, req)
+	Router().ServeHTTP(rr, request)
 
 	// Check the status code is what we expect.
 	if status := rr.Code; status != http.StatusOK {
