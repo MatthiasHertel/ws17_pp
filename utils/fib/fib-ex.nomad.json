@@ -3,9 +3,9 @@
         "Stop": null,
         "Region": null,
         "Namespace": null,
-        "ID": "fib-126xxx",
+        "ID": "fib-128xxx",
         "ParentID": null,
-        "Name": "fib-126",
+        "Name": "fib-128",
         "Type": "batch",
         "Priority": null,
         "AllAtOnce": null,
@@ -27,7 +27,7 @@
                             "args": [
                                 "/go/bin/fib",
                                 "-n",
-                                "60"
+                                "50"
                             ],
                             "image": "fib:dev"
                         },
