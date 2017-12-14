@@ -33,7 +33,7 @@ func FindJobEndpoint(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	job, err := jobRepository.FindByID(params["jobID"])
-	job.Templates, err = templateRepository.FindTemplateByJobID(params["jobID"])
+	job.Templates, _ = templateRepository.FindTemplateByJobID(params["jobID"])
 	if err != nil {
 		respondWithError(w, http.StatusNotFound, err.Error())
 		return
