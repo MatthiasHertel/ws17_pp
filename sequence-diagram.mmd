@@ -1,0 +1,53 @@
+sequenceDiagram
+    participant Client
+    participant HpcRestApi
+    participant Database
+    participant Minio
+    participant NomadApi
+    Client->>HpcRestApi: Create Job
+    HpcRestApi->>Database: Persist Job
+    Note right of Database: Generate unique identifier: <br/> bson.NewObjectId() 
+    Database->>HpcRestApi: Get JobID
+    HpcRestApi->>Client: Get JobID
+    Client-->>Database: READ UPDATE DELETE Jobs
+    Client->>HpcRestApi: Create Template
+    HpcRestApi->>Database: Persist Template
+    HpcRestApi->>Minio: Create Bucket with Templates
+    Note right of Minio: foreach Job new Bucket with Templates
+    Minio->>HpcRestApi: Get Bucket
+    HpcRestApi->>Client: Get TemplateID
+    Client-->>Database: READ UPDATE DELETE Templates
+    Client->HpcRestApi: Client submit Job
+    Client->>HpcRestApi: Submit Job
+    HpcRestApi->>Database: Read Job Data
+    Note right of Database: e.g. JobID Timestamps etc
+    Database->>HpcRestApi: Get Job Data
+    HpcRestApi->>Minio: Read Job Templates
+    Note right of Database: get Jobspecific Params from Template
+    Minio->>HpcRestApi: Get Job Templates
+    HpcRestApi->>NomadApi: Submit Job with choosen Templates
+    Note right of NomadApi: Starting Job <br/> ...
+    Client->HpcRestApi: Client get Jobstatus
+    loop interval ~minute
+        Client->>HpcRestApi: Request Job Status
+        HpcRestApi->>NomadApi: Request Job Status
+        HpcRestApi->>NomadApi: Check Job Stauts
+        alt Job is running
+            Note right of NomadApi: Running <br/> ...
+            NomadApi->>NomadApi: do nothing
+        else Job is finished
+            
+            Note right of NomadApi: Finished <br/> ...
+            NomadApi->>Minio: Write Result back to Minio
+        end
+    NomadApi->>HpcRestApi: Response Job Status
+    HpcRestApi->>Client: Response Job Status
+    end
+
+    Client->HpcRestApi:  4.Client get Result
+    Client->>HpcRestApi: Get Result
+    HpcRestApi->>Minio: Fetch Result
+    Minio->>HpcRestApi: Get Result
+    HpcRestApi->>Client: Get Result
+
+    
