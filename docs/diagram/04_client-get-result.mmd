@@ -1,0 +1,10 @@
+sequenceDiagram
+    participant Client
+    participant HpcRestApi
+    participant Database
+    participant Minio
+    participant NomadApi
+    Client->>HpcRestApi: Get Result
+    HpcRestApi->>Minio: Fetch Result
+    Minio->>HpcRestApi: Get Result
+    HpcRestApi->>Client: Get Result

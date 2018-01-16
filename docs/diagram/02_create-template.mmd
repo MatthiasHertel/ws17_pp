@@ -1,0 +1,13 @@
+sequenceDiagram
+    participant Client
+    participant HpcRestApi
+    participant Database
+    participant Minio
+    participant NomadApi
+    Client->>HpcRestApi: Create Template
+    HpcRestApi->>Database: Persist Template
+    HpcRestApi->>Minio: Create Bucket with Templates
+    Note over Minio, NomadApi: foreach Job new Bucket with Templates
+    Minio->>HpcRestApi: Get Bucket
+    HpcRestApi->>Client: Get TemplateID
+    Note over Client,Database: CREATE READ UPDATE DELETE Templates

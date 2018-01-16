@@ -1,0 +1,24 @@
+sequenceDiagram
+    participant Client
+    participant HpcRestApi
+    participant Database
+    participant Minio
+    participant NomadApi
+    loop interval ~minute
+        Client->>HpcRestApi: Request Job Status
+        HpcRestApi->>NomadApi: Request Job Status
+        HpcRestApi->>NomadApi: Check Job Stauts
+        alt Job is running
+            Note right of NomadApi: Running <br/> ...
+            NomadApi->>NomadApi: do nothing
+        else Job is finished
+
+
+            Note right of NomadApi: Finished <br/>
+            NomadApi->>NomadApi: notify client
+            NomadApi->>Minio: Write Result back to Minio
+
+        end
+    NomadApi->>HpcRestApi: Response Job Status
+    HpcRestApi->>Client: Response Job Status
+    end

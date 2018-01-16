@@ -1,0 +1,12 @@
+sequenceDiagram
+    participant Client
+    participant HpcRestApi
+    participant Database
+    participant Minio
+    participant NomadApi
+    Client->>HpcRestApi: Create Job
+    HpcRestApi->>Database: Persist Job
+    Note over Database, Minio: Generate unique identifier: <br/> JobID = bson.NewObjectId()
+    Database->>HpcRestApi: Get JobID
+    HpcRestApi->>Client: Get JobID
+    Note over Client,Database: CREATE READ UPDATE DELETE Jobs
