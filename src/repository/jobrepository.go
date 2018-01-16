@@ -1,10 +1,14 @@
 package repository
 
 import (
+	"fmt"
+	"html/template"
 	"log"
+	"os"
 
 	"github.com/MatthiasHertel/ws17_pp/src/connection"
 	"github.com/MatthiasHertel/ws17_pp/src/models"
+	minio "github.com/minio/minio-go"
 	mgo "gopkg.in/mgo.v2"
 	"gopkg.in/mgo.v2/bson"
 )
@@ -13,6 +17,11 @@ import (
 type JobsRepo struct {
 	Server   string
 	Database string
+}
+
+type JobTemplate struct {
+	Param string
+	JobID string
 }
 
 var db *mgo.Database
@@ -61,8 +70,68 @@ func (m *JobsRepo) FindByID(id string) (models.Job, error) {
 
 // Insert a job into database
 func (m *JobsRepo) Insert(job models.Job) error {
-	err := db.C(COLLECTION).Insert(&job)
-	return err
+	//TODO here render template with params
+
+	var jobTmpl JobTemplate
+
+	jobTmpl.Param = job.Param
+	jobTmpl.JobID = job.ID.Hex()
+
+	// >>> template
+	tmpl, _ := template.New("job.tmpl").ParseFiles("files/templates/job.tmpl")
+	filename := fmt.Sprintf("%v.json", jobTmpl.JobID)
+	f, _ := os.Create(filename)
+
+	_ = tmpl.Execute(f, jobTmpl)
+
+	// >>> objectstore
+
+	// save to minio
+
+	endpoint := "localhost:9001"
+	accessKeyID := "minio"
+	secretAccessKey := "minio123"
+	useSSL := false
+
+	// Initialize minio client object.
+	minioClient, err := minio.New(endpoint, accessKeyID, secretAccessKey, useSSL)
+	if err != nil {
+		log.Fatalln(err)
+	}
+	bucketName := jobTmpl.JobID
+
+	location := "us-east-1"
+
+	err = minioClient.MakeBucket(bucketName, location)
+	if err != nil {
+		// Check to see if we already own this bucket (which happens if you run this twice)
+		exists, err := minioClient.BucketExists(bucketName)
+		if err == nil && exists {
+			log.Printf("We already own %s\n", bucketName)
+		} else {
+			log.Fatalln(err)
+		}
+	}
+	log.Printf("Successfully created new Bucket with Name:  %s\n", bucketName)
+
+	// Upload the text file
+	objectName := filename
+	filePath := filename
+	contentType := "application/json"
+
+	// Upload the text file with FPutObject
+
+	n, err := minioClient.FPutObject(bucketName, objectName, filePath, minio.PutObjectOptions{ContentType: contentType})
+	if err != nil {
+		log.Fatalln(err)
+	}
+
+	log.Printf("Successfully uploaded %s of size %d\n into Bucket: %s", objectName, n, bucketName)
+
+	os.Remove(filename)
+	// >>> database
+	err_db := db.C(COLLECTION).Insert(&job)
+	return err_db
 }
 
 // Delete an existing job
