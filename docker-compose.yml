@@ -5,3 +5,13 @@ services:
         container_name: "mongodb"
         ports:
             - 27017:27017
+    minio1:
+     image: minio/minio
+     volumes:
+      - ./files/minio-docker-volume/data:/data
+     ports:
+      - "9001:9000"
+     environment:
+      MINIO_ACCESS_KEY: minio
+      MINIO_SECRET_KEY: minio123
+     command: server /data
