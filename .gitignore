@@ -7,6 +7,7 @@ files/minio-docker-volume/*
 
 ## ignore credentials
 env.tex
+env
 
 ## ignore pdf
 *.pdf
