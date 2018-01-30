@@ -47,7 +47,7 @@ func TestFindJobEndpoint(t *testing.T) {
 	fmt.Print(rr2.Body)
 
 	// Check the status code is what we expect.
-	if status := rr2.Code; status != http.StatusOK {
+	if status := rr2.Code; status != http.StatusNotFound {
 		t.Errorf("handler returned wrong status code: got %v want %v",
 			status, http.StatusOK)
 	}

@@ -21,6 +21,7 @@ func NewRouter() *mux.Router {
 	router.Handle("/jobs", ch.ThenFunc(handler.UpdateJobEndPoint)).Methods("PUT")
 	router.Handle("/jobs", ch.ThenFunc(handler.DeleteJobEndPoint)).Methods("DELETE")
 	router.Handle("/jobs/{jobID}", ch.ThenFunc(handler.FindJobEndpoint)).Methods("GET")
+	router.Handle("/jobs/{jobID}/submit", ch.ThenFunc(handler.SubmitJobEndPoint)).Methods("GET")
 
 	// template resource routes
 	// TODO USER PREFIX
