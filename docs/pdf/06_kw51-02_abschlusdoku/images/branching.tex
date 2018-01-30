@@ -1,0 +1,38 @@
+
+\documentclass[12pt]{article}
+\usepackage{tikz}
+\usepackage{pgfkeys}
+\usetikzlibrary{shapes}
+
+\pagestyle{empty}
+\begin{document}
+% \begin{tikzpicture}
+%   \matrix[row sep=10mm,column sep=4mm ,nodes={draw, thick, fill=black!20},
+%         row sep=0.3cm,column sep=0.5cm] {
+%     % Top Row (feature branch)
+%     & \node [rectangle] (feature) {Featur}; & \node[diamond] (c2) {2}; & & \node[diamond] (c4) {4}; & & &\\
+%     % Bottom Row (trunk)
+%     \node [rectangle] (trunk) {trunk}; & \node[diamond] (c1) {1}; & & \node[diamond] (c3) {3}; &  & \node[diamond] (c5) {5}; & \node [ellipse] (end) {};\\
+%   };
+%   \begin{scope}[every node/.style={midway,auto,font=\scriptsize}]
+%     \draw [very thick, ->] (trunk) -- (c1) -- (c3) -- (c5) -- (end);
+%     \draw [very thick, ->] (feature) -- (c2) -- (c4);
+%     \draw [dashed, very thick, ->] (trunk) -- node {$branch$} (feature);
+%     \draw [dashed, very thick, ->] (c4) -- node {$merge$} (c5);
+%   \end{scope}
+% \end{tikzpicture}
+
+\begin{center}
+  \begin{minipage}{\linewidth}
+    \centering
+    \begin{tikzpicture}[scale=1.8, auto,swap]
+      \foreach \pos/\name in {
+          {(0,0)}/1, {(-1,1)}/5, {(1,1)}/3, {(0,2)}/15, {(1,2)}/9, {(2,2)}/24, {(0,3)}/45}
+        \node[vertex] (\name) at \pos {$\name$};
+      \foreach \source/ \dest in {1/3, 1/5, 5/15, 3/15, 3/9, 3/24, 9/45, 15/45}
+        \path[edge] (\source) -- (\dest);
+    \end{tikzpicture}
+    \captionof{figure}{Beschriftung der Abbildung}
+  \end{minipage}
+\end{center}
+\end{document}
