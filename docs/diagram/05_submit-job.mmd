@@ -1,0 +1,29 @@
+sequenceDiagram
+    participant Client
+    participant HpcRestApi
+    participant Database
+    participant Minio
+    participant NomadApi
+    Client->>HpcRestApi: GET Request
+    Note over Client,HpcRestApi: Endpoint: host:7777/jobs/{JobID}/submit
+    HpcRestApi->>Database: FETCH Job-Collection
+    Note right of Database: by JobID
+    Database->>HpcRestApi: Get Job-Collection
+    HpcRestApi->>Database: FETCH Template-Collection
+    Note right of Database: by TemplateID
+    Database->>HpcRestApi: Get Template-Collection
+    HpcRestApi->>Minio: Fetch Template-Files
+    Note right of Database: Get Bucket with Files
+    Minio->>HpcRestApi: Get Templates-Files
+    HpcRestApi->>NomadApi: PUT Request
+    Note over Minio, NomadApi: Endpoint: Nomad-Host:4646/v1/jobs/
+    alt Job is running
+        Note right of NomadApi: Running
+        NomadApi->>NomadApi: do nothing
+    else Job is finished
+        Note right of NomadApi: Finished
+        NomadApi->>NomadApi: notify client
+        NomadApi->>Minio: Write Result back to Minio
+    end
+    NomadApi->>HpcRestApi: Notify Job is Finished
+    HpcRestApi->>Client: Notify the Client

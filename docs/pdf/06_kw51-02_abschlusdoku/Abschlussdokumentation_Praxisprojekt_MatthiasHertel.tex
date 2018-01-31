@@ -98,6 +98,11 @@
 \lstset{basicstyle=\footnotesize\ttfamily,breaklines=true}
 % \lstset{framextopmargin=50pt,frame=bottomline}
 
+% \renewcommand*{\citesetup}{%
+%     \small
+%     \bfseries
+%     \biburlsetup
+%     \frenchspacing}
 
 \makeglossaries
 \glstoctrue
@@ -257,7 +262,7 @@ Die oben aufgeführten Sprachmerkmale haben dazu geführt das ich für mein Prax
 
 \subsection{Wichtige Technologien}
 
-In diesem Abschnitt möchte ich wichtige Technologien benennen und vorstellen die mir bei der Umsetzung der Aufgabe geholfen haben.
+In diesem Abschnitt möchte ich einige wichtige Technologien benennen und vorstellen die mir bei der Umsetzung der Aufgabe geholfen haben.
 
 \subsubsection{Versionskontrolle - Git}
 
@@ -265,7 +270,7 @@ Ein elementares Werkzeug stellte für mich die Versionskontrolle Git dar \cite{G
 
 Mit Git war es mir möglich den Quellcode über verschiedene Workstations hinweg verteilt zu bearbeiten (Distributed Version Control System). Als Remote habe ich den Quellcode in einem privaten Git-Repository auf github.com \cite{GITHUB} verwaltet.
 
-Ich habe bei der Versionierung den Ansatz des Featurebranchings verfolgt (siehe Abbildung 2). Das bedeutet das man einen Master-Branch hat der stabil ist. Funktionalitäten werden in einem Entwicklungszweig (Branch) entwickelt und nach Vollendung mit dem Master gemerged. Dieser Ansatz ermöglichte mir eine nicht lineare Entwicklung , bestimmte Features auszuprobieren und nach Vollendung entweder in den Master zu mergen oder zu verwerfen.
+Ich habe bei der Versionierung den Ansatz des Featurebranchings verfolgt (siehe Abbildung 2). Das bedeutet das man einen Master-Branch hat der stabil ist und lauffähig gehalten wird. Funktionalitäten werden in einem Entwicklungszweig (Branch) entwickelt und nach Vollendung mit dem Master gemerged. Dieser Ansatz ermöglichte mir eine nicht lineare Entwicklung , bestimmte Features auszuprobieren und nach Vollendung entweder in den Master zu mergen oder zu verwerfen.
 % Der Ansatz des Branchings hat mir geholfen Entwicklungszweige zu nutzen und Features auszuprobieren die später in den Master gemerged wurden.
 
 \begin{figure}[htp!]
@@ -293,14 +298,14 @@ Ich habe bei der Versionierung den Ansatz des Featurebranchings verfolgt (siehe 
     \end{scope}
   \end{tikzpicture}
 
-  \caption{Schematische Darstellung des Feature-Branching-Workflow}
+  \caption{Schematische Darstellung eines Feature-Branching-Workflow}
   \label{}
 \end{figure}
 
 
-Darüberhinaus deckte die Arbeit mit Git auch die Anforderung an das Erfassen von Requirements ab. (Requirements-Engineering) Anforderungen wurden durch sogenannte Issue's direkt im Repository, sehr Quellcode nah erfasst, und bearbeitet. Über die Website github.com konnte auch direkt auf Quellcodestellen oder auf bestimmte Codeveränderungen (Commits) referenziert werden.
+Darüberhinaus deckte die Arbeit mit Git auch die Anforderung an das Erfassen von Requirements ab. (Requirements-Engineering) Anforderungen wurden durch sogenannte Issue's direkt im Repository, sehr Quellcode nah erfasst, und abgearbeitet. Über die Website github.com konnte man auch direkt auf Quellcodestellen oder auf bestimmte Codeveränderungen (Commits) referenzieren.
 
-Eine Einbindung mehrerer Remotes (e.g. produktiv) zur Erstellung eines Deploymentprozesses ist dadurch auch möglich.
+Eine Einbindung mehrerer Remotes (e.g. produktiv) zur Erstellung eines Deploymentprozesses ist mit diesem Tool auch denkbar.
 
 
 
@@ -344,40 +349,51 @@ services:
 
 \subsubsection{Weitere wichtige Tools}
 
-\subparagraph{Mermaid - Sequenzdiagram}
+\subparagraph{Mermaid - Sequenzdiagram}\mbox{}\\
 
-Als weiteres wichtiges Tool zur Modellierung des Prozessablaufes in einem Sequenzdiagramm ist das Tool Mermaid. Es arbeitet ähnlich wie Plant-UMl textbasiert und ist somit versionierbar. Damit war es mir möglich aus einem textbasiertem YAML ähnlichem Format ein Sequenzdiagramm zu rendern.
+Ein wichtiges Tool zur Modellierung des Prozessablaufes in einem Sequenzdiagramm ist das Tool Mermaid\cite{MERMAID} für mich gewesen. Es arbeitet ähnlich wie Plant-UMl textbasiert was den Vorteil hat, das die Sequenzdiagramme versionierbar blieben. Damit war es mir möglich aus einem textbasiertem YAML ähnlichem Format ein Sequenzdiagramm zu rendern.
 
-\subparagraph{Tmux}
+\subparagraph{Tmux}\mbox{}\\
 
-\subparagraph{Tmuxinator}
-\subparagraph{Rest-Clients / Insomia - Curl}
+Ich habe in meinem Praxisprojekt sehr viel auf der Kommandozeile gearbeitet. Tmux\cite{TMUX} war ein wichtiges Tool was mir die Arbeit mit der Kommandozeile sehr erleichtert hat.
+Tmux ist ein Terminal-Multiplexer für die Kommandozeile. Das Tool ermöglicht es, innerhalb eines Terminals oder einer Terminalemulation verschiedene virtuelle Konsolensitzungen zu erzeugen und zu verwalten. Sitzungen können getrennt ("detach") und später weitergeführt werden ("attach"). Mit tmux ist es möglich, Konfigurationen für unterschiedliche Zwecke zu definieren, sodass man die jeweils gewünschte Umgebung zur Verfügung hat.
+
+\subparagraph{Tmuxinator}\mbox{}\\
+
+Die Tmux-Sessions wurden sehr komplex im Laufe der Zeit. Das Tool Tmuxinator\cite{TMUXINATOR} hat mir beim Managen der Sessions geholfen. Man kann damit seine Tmux-Session in einem YAML-File beschreiben und mit einem einzigen Befehl starten.
+
+
+
+
+\subparagraph{Rest-Clients / Insomia - Curl}\mbox{}\\
+
+Zum manuellen Testen der Api-Endpoints habe ich zwei Tools verwendet die an dieser Stelle genannt werden sollten. Insomnia\cite{INSOMNIA} ist ein Gui Rest-Client mit dem man HTTP-Requests ausführen kann. Um automatisiert HTTP-Requests auszuführen habe ich das Kommandozeilentool CURL\cite{CURL} verwendet. (z.B. in einem Shellscript)
 
 \newpage
 \subsection{Umsetzung}
 
-In diesem Abschnitt möchte ich in einer zeitlichen Reihenfolge die Tätigkeiten beschreiben die ich in meinem Praxisprojekt umgesetzt habe.
+In diesem Abschnitt möchte ich in einer zeitlichen Reihenfolge die Tätigkeiten beschreiben die ich in meinem Praxisprojekt umgesetzt habe. Dabei möchte ich nur auf die Schwerpunkte eingehen und für detaillierte Ausführungen auf die Commit-Historie im Repository verweisen.
 
 \paragraph{Kalenderwoche 41 - 42}\mbox{}\\
 
-Die Anfangsphase war zum größten Teil eine Orientierungsphase. Ich habe mich in dieser Zeit auf die Programmiersprache Go festgelegt. Daher habe ich mich in dieser Phase habe vor allem mit der Einarbeitung in die Programmiersprache Go beschäftigt - Die Entwicklungsumgebung aufgesetzt und erste Schritte unternommen.
+Die Anfangsphase war zum größten Teil eine Orientierungsphase. Ich habe mich in dieser Zeit auf die Programmiersprache Go festgelegt. Daher habe ich mich in dieser Phase habe vor allem mit der Einarbeitung in die Programmiersprache Go beschäftigt - Die Entwicklungsumgebung aufgesetzt und erste einfache Programme geschrieben.
 
-Ich habe mich viel mit dem Package http https://golang.org/pkg/net/http/ auseinandergesetzt. Erste Http Handler geschrieben und geeignete Pattern (Decorator) für die Umsetzung von Rest-Services ausprobiert.
+Ich habe mich viel mit dem Net/HTTP-Package\cite{HTTP} auseinandergesetzt. Erste Http Handler geschrieben und geeignete Pattern (Decorator) für die Umsetzung von Rest-Services ausprobiert.
 
 \subparagraph{Kalenderwoche 43 - 44}\mbox{}\\
 
-Hier habe ich den Beschluss gefasst kein Framework zu verwenden, sondern eher auf Bibliotheken zurückzugreifen. Die Verwendung von Bibliotheken hat den Vorteil mehr Kontrolle in der Entwicklung des Projekts zu haben. Der Unterschied zwischen einer Bibliothek und einem Framework liegt in dem Ansatz des \textit{Inversion of Controls}.
+Hier habe ich den Beschluss gefasst kein Framework zu verwenden, sondern eher auf Bibliotheken und Packages zurückzugreifen. Die Verwendung von Bibliotheken hat den Vorteil mehr Kontrolle in der Entwicklung des Projekts zu haben. Der Unterschied zwischen einer Bibliothek und einem Framework liegt in dem Ansatz des \textit{Inversion of Controls} Patterns.
 
 \textit{Inversion von Control} ist ein wichtiger Teil dessen, was ein Framework von einer Bibliothek unterscheidet. Eine Bibliothek ist im Wesentlichen eine Reihe von Funktionen, welche normalerweise klassenorientiert aufgerufen werden können. Die Kontrolle über den Aufruf liegt beim Client.
 
 Ein Framework hingegen verkörpert ein abstrakteres Design mit mehr eingebautem Verhalten. Um ein Framework verwenden zu können, muss das Verhalten an verschiedenen Stellen im Framework eingefügt werden, entweder durch Unterklassenbildung oder durch das Injezieren eigener Klassen. Der Code des Frameworks ruft dann den Code an diesen Punkten auf. Die Kontrolle liegt also beim Framework.
 
-In dieser Phase habe ich mich auch viel mit der Umsetung des Routing der API auseinandergesetzt. Ich habe dazu die Bibliothek  (https://github.com/gorilla/mux) ausgewählt um das Routing in der Rest-Api umzusetzen.
-Dann habe ich versucht einen ersten einfachen Prototypen einer Rest-Api zu entwickeln. Der Prototyp beinhaltet lediglich einfache HTTP-Requests ohne weiterer Funktionalität.
+In dieser Phase habe ich mich auch viel mit der Umsetzung des Routing der API auseinandergesetzt. Ich habe dazu das gorilla/mux-Package \cite{MUX} ausgewählt um das Routing in der Rest-Api umzusetzen.
+Dann habe ich versucht einen ersten einfachen Prototypen einer Rest-Api zu entwickeln. Der Prototyp beinhaltet lediglich einfache HTTP-Requests ohne weiterer Funktionalität in dem Backend (z.B. Speicherung der Datensätze in einer Datenbank).
 
-Desweiteren habe ich mich mit dem in Go fest integriertem Unit-Test-Framework (https://golang.org/pkg/testing/) auseinandergesetzt und mich mit den Ansätzen des TDD (Test Driven Development) beschäftigt.
+Desweiteren habe ich mich mit dem in Go fest integriertem Unit-Test-Framework (pkg/testing) \cite{GO-TEST} auseinandergesetzt und mich viel mit den Ansätzen des TDD (Test Driven Development) beschäftigt.
 
-Ein weiterer Entschluss den ich in dieser Phase gefasst habe, war die Authentifizierung der API in einen Service auszulagern. Der Zugriff auf die Api erfolgt über ein Api-Gateway was die Authentifizierung und Authorisierung regelt. (siehe Architektur: Kong - Api - Gateway).
+Ein weiterer Entschluss den ich in dieser Phase gefasst habe, war die Authentifizierung der API in einen Service auszulagern. Der Zugriff auf die Api erfolgt über ein Api-Gateway was die Authentifizierung und Authorisierung regelt. (siehe Abschnitt Architektur: Kong - Api - Gateway).
 
 \subparagraph{Kalenderwoche 45 - 46}\mbox{}\\
 
@@ -414,11 +430,9 @@ In diesem Abschnitt des Praxisprojekts habe ich zunächst ein Refactoring der Pr
 \end{figure}
 
 \bigbreak
-Des weiteren habe ich mich konzeptionell mit der High-Level-Architektur der Api befasst (siehe Abbildung 4). In dieser Phase habe ich ein Konzept für den Prozessablauf - das Submitten eines Jobs durch die Api - entwickelt. Ich habe dazu die Anforderungen an die Rest-Api spezifiziert und notwendige Api-Endpoints definiert.
+Des weiteren habe ich mich konzeptionell mit der High-Level-Architektur des Rest-Api-Systems befasst (siehe Abbildung 4). In dieser Phase habe ich ein Konzept für den Prozessablauf, vor allem das Submitten eines Jobs durch die Api, entworfen. Ich habe dazu die Anforderungen an die Rest-Api spezifiziert und notwendige Api-Endpoints definiert.
 
-Im Zuge dessen habe ich mit verschiedenen Technologien auseinandergesetzt die für diese Anforderungen notwendig sind. Zum Beispiel sollte der Consumer der Api eine Möglichkeit bekommen für den Job notwendige Files hochzuladen. Diese Files und die aus den Parametern des Jobs ergebenen Konfigurationstemplates, welche die Variantensimulationen ermöglichen, sollen in einem Objectstore gespeichert werden.
-
-Als Service für den Objectstore ich Minio ausgewählt und einen Prototypen zur Interaktion mit dem Objektstore entwickelt. Dazu habe ich auf die Minio-Go Bibliothek zurückgegriffen und einen einfachen FileUploader über diesen Client entwickelt. (https://github.com/minio/minio-go.)
+Im Zuge dessen habe ich mit verschiedenen Technologien auseinandergesetzt die für diese Anforderungen notwendig sind. Zum Beispiel sollte der Consumer der Api eine Möglichkeit bekommen für den Job notwendige Files hochzuladen. Diese Files und die aus den Parametern des Jobs ergebenen Konfigurationstemplates, welche die Variantensimulationen ermöglichen, sollen in einem Objectstore gespeichert werden. Als Technologie für den Objectstore habe ich Minio ausgewählt und einen Prototypen zur Interaktion mit dem Objektstore entwickelt. Dazu habe ich auf die Minio-Go Bibliothek zurückgegriffen und einen einfachen FileUploader über diesen Client entwickelt. Für die Umsetzung des Fileuploader-Prototypen habe ich minio/minio-go-Package verwendet. \cite{MINIO-GO}
 
 Auf der Solver - Layer, der hintersten Ebene die das Cluster-Backend darstellen soll, habe ich einen einfachen Job-Mock entwickelt der ein HPC-Job simulieren soll. Dieser Job wird innerhalb eines Docker-Containers ausgeführt und über Nomad - einem Job-Schedulling-Service mittels einer Queue verwaltet. Diese Phase meines Praxisprojekts war eher konzeptionell geprägt.
 
@@ -458,15 +472,14 @@ Auf der Solver - Layer, der hintersten Ebene die das Cluster-Backend darstellen 
   \end{Verbatim}
 
 
-  \caption{High-Level Architektur der Rest-Api \cite{WinNT}}
+  \caption{High-Level Architektur der Rest-Api}
   \label{}
 \end{figure}
 
-\newpage
 \subparagraph{Kalenderwoche 47 - 48}\mbox{}\\
 
-In dieser Zeit habe ich mich vor allem mit der Implementierung der Endpoints befasst. Es können Jobs angelegt, ausgelesen, bearbeitet, und gelöscht werden. (CRUD - create,read,update,delete). Die Jobs werden in einer Mongo-Datenbank gespeichert. Dafür habe ich die Packages gopkg.in/mgo.v2 und gopkg.in/mgo.v2/bson verwendet. Die Jobs werden in einer Collection in der Mongo-Datenbank gespeichert. Zu jedem erzeugten Job ist es Möglich ein oder mehrere Templates anzulegen, welche die Varianten darstellen sollen. Als eindeutige Referenz zu der Job-Ressource dient die Unique Job-ID welche vom Datenbankschema erzeugt wird (bson.NewObjectId).
-
+In dieser Zeit habe ich mich vor allem mit der Implementierung der Api-Endpoints befasst. Es können Jobs angelegt, ausgelesen, bearbeitet, und gelöscht werden. (CRUD - create,read,update,delete). Die Jobs werden in einer Mongo-Datenbank persistiert. Dafür habe ich das gopkg.in/mgo.v2 \cite{GO-MGO} und das gopkg.in/mgo.v2/bson \cite{GO-MGO-BSON} Package verwendet. Die Jobs werden in einer eigenen Collection in der Mongo-Datenbank gespeichert. Zu jedem erzeugten Job ist es Möglich ein oder mehrere Templates zu erzeugen, welche die Parameter für die Varianten enthalten. Die Templates werden in einer eigenen Collection gespeichert und sind nicht hartverdrahtet mit der Job-Collection. Als eindeutige Referenz zu der Job-Ressource dient die Unique Job-ID welche vom Datenbankschema erzeugt wird (bson.NewObjectId). In der folgenden Tabelle werden die Api Endpoints für die Jobs und Templates aufgelistet.
+\newpage
 \begin{figure}[h!]
 \resizebox{\textwidth}{!}{
 \begin{tabular}{||l|r|l||}
@@ -494,7 +507,9 @@ Desweiteren habe ich mich in dieser Phase mit Best-Practices zu Microservices-Ar
 
 \subparagraph{Kalenderwoche 49 - 02}\mbox{}\\
 
-In der letzten Phase meines Praxisprojekts hab ich vor allem mit dem Job-Submit Prozess beschäftigt. (https://www.nomadproject.io/) Die Jobs werden über die Nomad-Api in eine Queue aufgenommen und mittels Consul in einem Docker-Container gestartet.
+In der letzten Phase meines Praxisprojekts hab ich vor allem mit dem Job-Submit Prozess beschäftigt. Ein Job kann Submitted werden über den jeweiligen Api-Endpoint. Die Rest-Api initiert im Backend einen Put-Request an das Scheduling-System (Nomad \cite{NOMAD}). In der Backend-Ebene (Solver Layer) werden je nach dem wieviele Varienten der jeweilige Job enthält Docker-Container mit dem Job gestartet.
+
+
 
 \begin{figure}[h!]
 \resizebox{\textwidth}{!}{
@@ -508,14 +523,45 @@ In der letzten Phase meines Praxisprojekts hab ich vor allem mit dem Job-Submit 
 \label{tab:meinetabelle}
 \end{figure}
 
+\newpage
+
+Im Folgenden werde ich Anhand von Sequenzdiagrammen die Funktionalität der Api beschreiben.
+
+1. Einen Job anlegen
+\begin{figure}[h!]
+  \centering
+
+  \includegraphics[width=\textwidth]{images/01_create-job.png}
+  \caption{Create Job Sequenzdiagramm}
+  \label{}
+
+\end{figure}
+
+
+2. Ein Template anlegen
+\begin{figure}[h!]
+  \centering
+
+  \includegraphics[width=\textwidth]{images/02_create-template.png}
+  \caption{Create Template Sequenzdiagramm}
+  \label{}
+
+\end{figure}
+
+
+\newpage
+3. Einen Job-Submitten
+\begin{figure}[h!]
+  \centering
+
+  \includegraphics[width=\textwidth]{images/jobsubmit.png}
+  \caption{Job - Submit Sequenzdiagramm }
+  \label{}
+
+\end{figure}
 
 
 
-\subsection{Probleme bei der Umsetzung}
-
-Aufgrund der Komplexität der Architektur und der gegebenen Zeit war mir nur ein sehr hard-codierte Implementierung der Api möglich. Ich musste mich in sehr viele Technologien einarbeiten und konzeptionell sehr viel erarbeiten. Die Solver-Layer wurde sehr abstrakt gehalten. Sie war für mich nur schwer verständlich und die sich daraus ergebenen Spezifikationen der Templates. Daher habe ich den Entschluss gefasst den Job als Attrappe umzusetzen. (Job-Mock - Fibonacci)
-
-Die Api kann benutzt werden um einen Fibonacci Job mit den in dem angelegten Job angegebenen Parametern zu starten. Die Api übermittelt die Daten an die Nomad-Api. Nomad startet den Job in einem Docker-Container.
 
 
 \newpage
@@ -527,7 +573,7 @@ Die Api kann benutzt werden um einen Fibonacci Job mit den in dem angelegten Job
 
 In diesem Abschnitte möchte ich noch einmal näher auf die verwendeten Services-Technologien eingehen die für die Gesamtarchitektur der Api notwendig waren.
 
-\subsection{Authentifizierung - Kong Api-Gateway}
+\subsection{Authentifizierung - Kong Api-Gateway \cite{KONGAPI}}
 
 Kong ist eine skalierbare Open-Source-API-Schicht (auch bekannt als API-Gateway oder API-Middleware).Das Gateway läuft vor der RESTful-API und kann um Plugins erweitert , die zusätzliche Funktionen und Services bieten, die über die Kernplattform hinausgehen. (siehe Abbildung 6)
 
@@ -538,7 +584,10 @@ Kong ist eine skalierbare Open-Source-API-Schicht (auch bekannt als API-Gateway 
   \label{}
 \end{figure}
 
-Kong habe ich als Authentifizierung für den Zugriff auf die Api benutzt.
+Kong habe ich als Authentifizierung-System für den Zugriff auf die Api benutzt. Es ist eine vorgeschaltene Applikation die sich um das User-Management kümmern soll. Es Forwarded die einkommenden Requests auf die Api und kann für die Authentifizierung, Rate-Limiting , Caching, Logging etc. benutzt werden.
+Es beinhaltet eine eigene Datenbank-Layer die das User-Management Schema abbildet.
+
+
 
 % $ curl -i -X POST \
 %   --url http://localhost:8001/apis/ \
@@ -546,17 +595,17 @@ Kong habe ich als Authentifizierung für den Zugriff auf die Api benutzt.
 %   --data 'hosts=example.com' \
 %   --data 'upstream_url=http://mockbin.org'
 
-\subsection{Persistenz - Mongo DB}
+\subsection{Persistenz - Mongo DB \cite{MONGODB}}
 
 MongoDB (abgeleitet vom engl. humongous, „gigantisch“) ist eine dokumentenorientierte NoSQL-Datenbank, die in der Programmiersprache C++ geschrieben ist. Da die Datenbank dokumentenorientiert ist, kann sie Sammlungen von JSON-ähnlichen Dokumenten verwalten. So können viele Anwendungen Daten auf natürlichere Weise modellieren, da die Daten zwar in komplexen Hierarchien verschachtelt werden können, dabei aber immer abfragbar und indizierbar bleiben.
 
-\subsection{Objectstore - Minio}
+\subsection{Objectstore - Minio \cite{MINIO}}
 
 Minio ist ein Objektspeicherserver, der unter Apache License v2.0 veröffentlicht wurde. Es ist kompatibel mit Amazon S3 Cloud Storage Service. Es eignet sich am besten für die Speicherung unstrukturierter Daten wie Fotos, Videos, Protokolldateien, Backups und Container- / VM-Images. Die Größe eines Objekts kann zwischen einigen KB und maximal 5 TB liegen.
 
-\subsection{Job Schedulling - Nomad}
-Nomad is a single binary that schedules applications and services on Linux, Windows, and Mac. It is an open source scheduler that uses a declarative job file for scheduling virtualized, containerized, and standalone applications.
+\subsection{Scheduling-System - Nomad \cite{NOMAD}}
 
+Nomad ist ein Tool zum Verwalten eines Maschinenclusters und zum Ausführen von Anwendungen auf diesen. Nomad abstrahiert Maschinen und den Standort von Anwendungen und ermöglicht Benutzern stattdessen zu deklarieren, was sie ausführen möchten. Nomad behandelt, wo sie ausgeführt werden und wie sie ausgeführt werden.
 
 \newpage
 
@@ -565,6 +614,15 @@ Nomad is a single binary that schedules applications and services on Linux, Wind
 %-------------------------------------------------------------------------------
 
 \section{Schlusswort}
+
+Aufgrund der Komplexität der Architektur und der gegebenen Zeit war mir nur ein sehr hard-codierte Implementierung der Api möglich. Ich musste mich in sehr viele Technologien einarbeiten und konzeptionell sehr viel erarbeiten.
+
+Daher wurde die Solver-Layer sehr abstrakt gehalten. Sie war für mich nur schwer verständlich und die sich daraus ergebenen Spezifikationen der Templates. Daher habe ich den Entschluss gefasst den Job als Attrappe umzusetzen. (Job-Mock - Fibonacci) Meine Zielsetzung einen Durchlauf durch den Softwarestack habe ich dennoch erreicht.
+
+Die Api kann benutzt werden um einen Fibonacci Job mit den in dem angelegten Job und dessen Templates angegebenen Parametern zu starten. Die Api übermittelt die Daten an die Nomad-Api und Nomad startet den Job in einem Docker-Container.
+
+
+
 
 
 \newpage
@@ -629,8 +687,9 @@ E-Mail: j.dawon@cpu-24-7.com
 \renewcommand*{\bibfont}{\footnotesize}
 
 \printbibliography[type=tech,heading=bibintoc, title=Verwendete Technologien]
+\newpage
 \renewcommand*{\bibfont}{\footnotesize}
-\printbibliography[type=package,heading=bibintoc, title=Verwendete Go-Packages]
+\printbibliography[type=package,heading=bibintoc, title=Wichtige Go-Packages]
 \newpage
 \phantomsection
 \addcontentsline{toc}{section}{Abbildungsverzeichnis}
