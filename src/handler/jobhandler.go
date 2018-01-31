@@ -98,9 +98,11 @@ func DeleteJobEndPoint(w http.ResponseWriter, r *http.Request) {
 // Submit an existing Job
 func SubmitJobEndPoint(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
+	fmt.Println("TEST")
 	job, err := jobRepository.FindByID(params["jobID"])
 
 	if err != nil {
+		fmt.Println("TEST")
 		respondWithError(w, http.StatusNotFound, err.Error())
 		return
 	}
@@ -122,8 +124,9 @@ func SubmitJobEndPoint(w http.ResponseWriter, r *http.Request) {
 	bucketName := job.ID.Hex()
 
 	// _, err = minioClient.FGetObject(bucketName, job.ID.Hex(), "/5a7079f19ebea47c0be898a9/5a7079f19ebea47c0be898a9", minio.GetObjectOptions{})
-	reader, err := minioClient.GetObject(bucketName, "5a7079f19ebea47c0be898a9.json", minio.GetObjectOptions{})
+	reader, err := minioClient.GetObject(bucketName, "5a71ec91ce2236616cd3a044.json", minio.GetObjectOptions{})
 	if err != nil {
+		fmt.Println("TEST")
 		fmt.Println(err)
 		return
 	}

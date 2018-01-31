@@ -230,7 +230,7 @@ Was ist nötig um die in der Beschreibung definierten Anforderungen umzusetzen. 
 \section{Vorgehensweise}
 \subsection{Auswahl der Programmiersprache}
 
-Ich habe mir für die Umsetzung des Praxisprojekts die Programmiersprache Go ausgewählt. \cite{GOLANG}
+Ich habe mir für die Umsetzung des Praxisprojekts die Programmiersprache Go \cite{GOLANG} ausgewählt.
 Das Hauptgeschäftsfeld des Unternehmens in dem ich mein Praxisprojekt umsetzte besteht in der Entwicklung und Administration von Cloud-Computing-Systemen. Daher lag der Schluß nahe eine Programmiersprache zu wählen die den Anforderungen des Cloud-Computings gerecht werden kann. Auch in Hinblick auf zukünftige Projekte in dem Unternehmen erschien mir das Erlernen dieser neuen Programmiersprache als sehr sinnvoll.
 
 Go ist eine kompilierbare Programmiersprache, die Nebenläufigkeit unterstützt und über eine automatische Speicherbereinigung verfügt. Entwickelt wurde Go von Mitarbeitern des Unternehmens Google Inc. Sie wurde aus Unzufriedenheit über die bestehenden Sprachen zur Softwareentwicklung wie C++ oder Java im Kontext heutiger Computersysteme, insbesondere im Hinblick auf skalierbare Netzwerkdienste, Cluster- und Cloud Computing, entwickelt. Aufgrund der reduzierten Sprachmittel kann der Compiler rasend schnell den Quelltext übersetzen. Dadurch eignet sich Go gut für Einsatzbereiche, die sonst eher Skriptsprachen vorbehalten sind. Die folgende Grafik soll die Effizienz und Einfachheit der Sprache verdeutlichen.
@@ -573,9 +573,9 @@ Im Folgenden werde ich Anhand von Sequenzdiagrammen die Funktionalität der Api 
 
 In diesem Abschnitte möchte ich noch einmal näher auf die verwendeten Services-Technologien eingehen die für die Gesamtarchitektur der Api notwendig waren.
 
-\subsection{Authentifizierung - Kong Api-Gateway \cite{KONGAPI}}
+\subsection{Authentifizierung - Kong Api-Gateway }
 
-Kong ist eine skalierbare Open-Source-API-Schicht (auch bekannt als API-Gateway oder API-Middleware).Das Gateway läuft vor der RESTful-API und kann um Plugins erweitert , die zusätzliche Funktionen und Services bieten, die über die Kernplattform hinausgehen. (siehe Abbildung 6)
+Kong \cite{KONGAPI} ist eine skalierbare Open-Source-API-Schicht (auch bekannt als API-Gateway oder API-Middleware).Das Gateway läuft vor der RESTful-API und kann um Plugins erweitert , die zusätzliche Funktionen und Services bieten, die über die Kernplattform hinausgehen. (siehe Abbildung 6)
 
 \begin{figure}[h!]
   \centering
@@ -595,17 +595,31 @@ Es beinhaltet eine eigene Datenbank-Layer die das User-Management Schema abbilde
 %   --data 'hosts=example.com' \
 %   --data 'upstream_url=http://mockbin.org'
 
-\subsection{Persistenz - Mongo DB \cite{MONGODB}}
+\subsection{Persistenz - Mongo DB }
 
-MongoDB (abgeleitet vom engl. humongous, „gigantisch“) ist eine dokumentenorientierte NoSQL-Datenbank, die in der Programmiersprache C++ geschrieben ist. Da die Datenbank dokumentenorientiert ist, kann sie Sammlungen von JSON-ähnlichen Dokumenten verwalten. So können viele Anwendungen Daten auf natürlichere Weise modellieren, da die Daten zwar in komplexen Hierarchien verschachtelt werden können, dabei aber immer abfragbar und indizierbar bleiben.
+MongoDB \cite{MONGODB} (abgeleitet vom engl. humongous, „gigantisch“) ist eine dokumentenorientierte NoSQL-Datenbank, die in der Programmiersprache C++ geschrieben ist. Da die Datenbank dokumentenorientiert ist, kann sie Sammlungen von JSON-ähnlichen Dokumenten verwalten. So können viele Anwendungen Daten auf natürlichere Weise modellieren, da die Daten zwar in komplexen Hierarchien verschachtelt werden können, dabei aber immer abfragbar und indizierbar bleiben.
 
-\subsection{Objectstore - Minio \cite{MINIO}}
+\subsection{Objectstore - Minio }
 
-Minio ist ein Objektspeicherserver, der unter Apache License v2.0 veröffentlicht wurde. Es ist kompatibel mit Amazon S3 Cloud Storage Service. Es eignet sich am besten für die Speicherung unstrukturierter Daten wie Fotos, Videos, Protokolldateien, Backups und Container- / VM-Images. Die Größe eines Objekts kann zwischen einigen KB und maximal 5 TB liegen.
+Minio \cite{MINIO} ist ein Objektspeicherserver, der unter Apache License v2.0 veröffentlicht wurde. Es ist kompatibel mit Amazon S3 Cloud Storage Service. Es eignet sich am besten für die Speicherung unstrukturierter Daten wie Fotos, Videos, Protokolldateien, Backups und Container- / VM-Images. Die Größe eines Objekts kann zwischen einigen KB und maximal 5 TB liegen.
 
-\subsection{Scheduling-System - Nomad \cite{NOMAD}}
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.5\textwidth]{images/jobbucket_05.png}
+  \caption{Minio Userinterface mit dem Job-Bucket (JobID=5a71ec91ce2236616cd3a044)}
+  \label{}
+\end{figure}
 
-Nomad ist ein Tool zum Verwalten eines Maschinenclusters und zum Ausführen von Anwendungen auf diesen. Nomad abstrahiert Maschinen und den Standort von Anwendungen und ermöglicht Benutzern stattdessen zu deklarieren, was sie ausführen möchten. Nomad behandelt, wo sie ausgeführt werden und wie sie ausgeführt werden.
+\subsection{Scheduling-System - Nomad }
+
+Nomad \cite{NOMAD} ist ein Tool zum Verwalten eines Maschinenclusters und zum Ausführen von Anwendungen auf diesen. Nomad abstrahiert Maschinen und den Standort von Anwendungen und ermöglicht Benutzern stattdessen zu deklarieren, was sie ausführen möchten. Nomad behandelt, wo sie ausgeführt werden und wie sie ausgeführt werden.
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.5\textwidth]{images/jobrunning_04.png}
+  \caption{Nomad Userinterface - Running (JobID=5a71ec91ce2236616cd3a044)}
+  \label{}
+\end{figure}
 
 \newpage
 
