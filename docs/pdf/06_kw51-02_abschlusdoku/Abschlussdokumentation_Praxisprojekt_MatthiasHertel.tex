@@ -225,7 +225,7 @@ Was ist nötig um die in der Beschreibung definierten Anforderungen umzusetzen. 
 \section{Vorgehensweise}
 \subsection{Auswahl der Programmiersprache}
 
-Ich habe mir für die Umsetzung des Praxisprojekts die Programmiersprache Go ausgewählt.
+Ich habe mir für die Umsetzung des Praxisprojekts die Programmiersprache Go ausgewählt. \cite{GOLANG}
 Das Hauptgeschäftsfeld des Unternehmens in dem ich mein Praxisprojekt umsetzte besteht in der Entwicklung und Administration von Cloud-Computing-Systemen. Daher lag der Schluß nahe eine Programmiersprache zu wählen die den Anforderungen des Cloud-Computings gerecht werden kann. Auch in Hinblick auf zukünftige Projekte in dem Unternehmen erschien mir das Erlernen dieser neuen Programmiersprache als sehr sinnvoll.
 
 Go ist eine kompilierbare Programmiersprache, die Nebenläufigkeit unterstützt und über eine automatische Speicherbereinigung verfügt. Entwickelt wurde Go von Mitarbeitern des Unternehmens Google Inc. Sie wurde aus Unzufriedenheit über die bestehenden Sprachen zur Softwareentwicklung wie C++ oder Java im Kontext heutiger Computersysteme, insbesondere im Hinblick auf skalierbare Netzwerkdienste, Cluster- und Cloud Computing, entwickelt. Aufgrund der reduzierten Sprachmittel kann der Compiler rasend schnell den Quelltext übersetzen. Dadurch eignet sich Go gut für Einsatzbereiche, die sonst eher Skriptsprachen vorbehalten sind. Die folgende Grafik soll die Effizienz und Einfachheit der Sprache verdeutlichen.
@@ -263,7 +263,7 @@ In diesem Abschnitt möchte ich wichtige Technologien benennen und vorstellen di
 
 Ein elementares Werkzeug stellte für mich die Versionskontrolle Git dar \cite{GIT}. Eine Versionskontrolle ermöglicht zum einen die Versionierung des Entwicklungsstandes aber auch das verteilte und kollaborative Arbeiten an einem Softwareprojekt.
 
-Mit Git war es mir möglich den Quellcode über verschiedene Workstations hinweg verteilt zu bearbeiten (Distributed Version Control System). Als Remote habe ich den Quellcode in einem privaten Git-Repository auf github.com verwaltet.
+Mit Git war es mir möglich den Quellcode über verschiedene Workstations hinweg verteilt zu bearbeiten (Distributed Version Control System). Als Remote habe ich den Quellcode in einem privaten Git-Repository auf github.com \cite{GITHUB} verwaltet.
 
 Ich habe bei der Versionierung den Ansatz des Featurebranchings verfolgt (siehe Abbildung 2). Das bedeutet das man einen Master-Branch hat der stabil ist. Funktionalitäten werden in einem Entwicklungszweig (Branch) entwickelt und nach Vollendung mit dem Master gemerged. Dieser Ansatz ermöglichte mir eine nicht lineare Entwicklung , bestimmte Features auszuprobieren und nach Vollendung entweder in den Master zu mergen oder zu verwerfen.
 % Der Ansatz des Branchings hat mir geholfen Entwicklungszweige zu nutzen und Features auszuprobieren die später in den Master gemerged wurden.
@@ -307,7 +307,7 @@ Eine Einbindung mehrerer Remotes (e.g. produktiv) zur Erstellung eines Deploymen
 
 \subsubsection{Development und Deployment - Docker}
 
-Ein weiteres sehr wichtiges Tool war die Containervirtualisierung Docker. Sie ersparte mir enorm viel Zeit mit dem Aufsetzen der komplexen Softwarearchitektur. Sie minderte den Konfigurationsaufwand und half mir bei der Integration der Abhängigkeiten des Softwaresystems mit dem Ziel den lokalen Stack so produktivnah wie möglich aufzusetzen. (siehe Abschnitt Architektur)
+Ein weiteres sehr wichtiges Tool war die Containervirtualisierung Docker \cite{DOCKER}. Sie ersparte mir enorm viel Zeit mit dem Aufsetzen der komplexen Softwarearchitektur. Sie minderte den Konfigurationsaufwand und half mir bei der Integration der Abhängigkeiten des Softwaresystems mit dem Ziel den lokalen Stack so produktivnah wie möglich aufzusetzen. (siehe Abschnitt Architektur)
 
 Docker ist eine Open-Source-Software zur Isolierung von Anwendungen mit Containervirtualisierung. Es vereinfacht die Bereitstellung von Anwendungen, weil sich Container, die alle nötigen Pakete enthalten, leicht als Dateien transportieren und installieren lassen (Dockerfile). Container gewährleisten die Trennung und Verwaltung der auf einem Rechner genutzten Ressourcen. Das beinhaltet laut Aussage der Entwickler: Code, Laufzeitmodul, Systemwerkzeuge, Systembibliotheken - alles was auf einem Rechner installiert werden kann.
 
@@ -342,9 +342,17 @@ services:
 
 
 
-\subsubsection{Tools - Sequenz Diagramme - Mermaid}
+\subsubsection{Weitere wichtige Tools}
+
+\subparagraph{Mermaid - Sequenzdiagram}
 
 Als weiteres wichtiges Tool zur Modellierung des Prozessablaufes in einem Sequenzdiagramm ist das Tool Mermaid. Es arbeitet ähnlich wie Plant-UMl textbasiert und ist somit versionierbar. Damit war es mir möglich aus einem textbasiertem YAML ähnlichem Format ein Sequenzdiagramm zu rendern.
+
+\subparagraph{Tmux}
+
+\subparagraph{Tmuxinator}
+\subparagraph{Rest-Clients / Insomia - Curl}
+
 \newpage
 \subsection{Umsetzung}
 
@@ -488,6 +496,18 @@ Desweiteren habe ich mich in dieser Phase mit Best-Practices zu Microservices-Ar
 
 In der letzten Phase meines Praxisprojekts hab ich vor allem mit dem Job-Submit Prozess beschäftigt. (https://www.nomadproject.io/) Die Jobs werden über die Nomad-Api in eine Queue aufgenommen und mittels Consul in einem Docker-Container gestartet.
 
+\begin{figure}[h!]
+\resizebox{\textwidth}{!}{
+\begin{tabular}{||l|r|l||}
+	\hline
+ \textbf{URI-Endpoint}  & \textbf{HTTP-Method} & \textbf{Description} \\ \hline\hline
+ \texttt{/jobs/\{jobID\}/submit    \hspace{15ex}              } & GET & Submit specific Job \\ \hline
+\end{tabular}
+}
+\caption{Job Submit Endpoint}
+\label{tab:meinetabelle}
+\end{figure}
+
 
 
 
@@ -495,7 +515,7 @@ In der letzten Phase meines Praxisprojekts hab ich vor allem mit dem Job-Submit 
 
 Aufgrund der Komplexität der Architektur und der gegebenen Zeit war mir nur ein sehr hard-codierte Implementierung der Api möglich. Ich musste mich in sehr viele Technologien einarbeiten und konzeptionell sehr viel erarbeiten. Die Solver-Layer wurde sehr abstrakt gehalten. Sie war für mich nur schwer verständlich und die sich daraus ergebenen Spezifikationen der Templates. Daher habe ich den Entschluss gefasst den Job als Attrappe umzusetzen. (Job-Mock - Fibonacci)
 
-Die Api kann benutzt werden um einen Fibonacci Job mit den in dem Job erzeugten Parametern zu starten.
+Die Api kann benutzt werden um einen Fibonacci Job mit den in dem angelegten Job angegebenen Parametern zu starten. Die Api übermittelt die Daten an die Nomad-Api. Nomad startet den Job in einem Docker-Container.
 
 
 \newpage
@@ -545,6 +565,8 @@ Nomad is a single binary that schedules applications and services on Linux, Wind
 %-------------------------------------------------------------------------------
 
 \section{Schlusswort}
+
+
 \newpage
 
 \section{Zus"atzliche Informationen}
@@ -604,7 +626,10 @@ E-Mail: j.dawon@cpu-24-7.com
 % \renewcommand\glossarytitle{}
 \clearpage
 \setlength\bibitemsep{10pt}
+\renewcommand*{\bibfont}{\footnotesize}
+
 \printbibliography[type=tech,heading=bibintoc, title=Verwendete Technologien]
+\renewcommand*{\bibfont}{\footnotesize}
 \printbibliography[type=package,heading=bibintoc, title=Verwendete Go-Packages]
 \newpage
 \phantomsection
